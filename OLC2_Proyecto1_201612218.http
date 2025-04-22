@@ -1,0 +1,6 @@
+@OLC2_Proyecto1_201612218_HostAddress = http://localhost:5086
+
+GET {{OLC2_Proyecto1_201612218_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

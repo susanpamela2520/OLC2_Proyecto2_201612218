@@ -1,0 +1,20 @@
+func main() {
+    saludo2()
+    fmt.Println("Hola Mundo!")
+}
+
+func saludo2() {
+    fmt.Println("Hola 2");
+}
+
+
+func factorial(n int) int {
+    if(n >= 1) {
+        return n * factorial(n - 1);
+    }
+    return 1;
+}
+
+func main() {
+    fmt.Println("hola mundo" + 5 * 7);
+}

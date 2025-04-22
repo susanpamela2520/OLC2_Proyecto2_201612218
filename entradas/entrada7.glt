@@ -1,0 +1,9 @@
+func main() {
+    vector := []int {1,2,3,4}
+    matriz := [][]int {{1,2,3},{4,5,6},{7,8,9}}
+    cubo := [][][]int {{{1,2,3},{4,5,6},{7,8,9}},{{1,2,3},{4,5,6},{7,8,9}}}
+
+    fmt.Println(slices.Index(vector, 3))
+    fmt.Println(slices.Index(matriz[1], 1))
+    fmt.Println(slices.Index(cubo[1][2], 8))
+}

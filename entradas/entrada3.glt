@@ -1,0 +1,6 @@
+func main() {
+    c := 3.1416 
+    
+    fmt.Println( c)
+}
+

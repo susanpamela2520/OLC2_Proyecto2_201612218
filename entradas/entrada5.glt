@@ -1,0 +1,33 @@
+func main() {
+    vector := []int {1,2,3,4}
+    matriz := [][]int {{1,2,3},{4,5,6},{7,8,9}}
+    cubo := [][][]int {{{1,2,3},{4,5,6},{7,8,9}},{{1,2,3},{4,5,6},{7,8,9}}}
+
+    fmt.Println("=========VECTOR=========", reflect.TypeOf(vector))
+    for i := 0; i < len(vector); i ++ {
+        fmt.Println(vector[i])
+    }
+
+    vector = append(vector, 10);
+    fmt.Println("\\n=========VECTOR=========", reflect.TypeOf(vector))
+
+    for i := 0; i < len(vector); i ++ {
+        fmt.Println(vector[i])
+    }
+
+    fmt.Println("\\n=========MATRIZ=========", reflect.TypeOf(matriz))
+    for i := 0; i < len(matriz); i ++ {
+        for j := 0; j < len(matriz[i]); j ++ {
+            fmt.Println(matriz[i][j])
+        }
+    }
+
+    fmt.Println("\\n==========CUBO==========", reflect.TypeOf(cubo))
+    for i := 0; i < len(cubo); i ++ {
+        for j := 0; j < len(cubo[i]); j ++ {
+            for k := 0; k < len(cubo[i][j]); k ++ {
+                fmt.Println(cubo[i][j][k])
+            }
+        }
+    }
+}

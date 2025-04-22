@@ -1,0 +1,13 @@
+func main() {
+    var a rune = '@'
+    var b bool 
+    c := 3.1416 
+    saludo2(100)
+    fmt.Println("Hola Mundo!")
+    fmt.Println(a=='@', b&& true, c*2+1-3)
+}
+
+func saludo2(n int) {
+    fmt.Println("Hola 2");
+    fmt.Println(n)
+}
