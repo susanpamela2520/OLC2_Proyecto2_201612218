@@ -1,11 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
-using OLC2_Proyecto1_201612218.src.Backend.controlador;
-using OLC2_Proyecto1_201612218.src.Backend.parser;
+using OLC2_Proyecto2_201612218.src.Backend.controlador;
+using OLC2_Proyecto2_201612218.src.Backend.parser;
 using Antlr4.Runtime;
-using OLC2_Proyecto1_201612218.src.Backend.Interprete.Entorno1;
-using OLC2_Proyecto1_201612218.src.Backend.Interprete.Instrucciones;
-using OLC2_Proyecto1_201612218.src.Backend.Interprete.Abstracts;
-using OLC2_Proyecto1_201612218.src.Backend.Interprete.Utils;
+using OLC2_Proyecto2_201612218.src.Backend.Interprete.Entorno1;
+using OLC2_Proyecto2_201612218.src.Backend.Interprete.Instrucciones;
+using OLC2_Proyecto2_201612218.src.Backend.Interprete.Abstracts;
+using OLC2_Proyecto2_201612218.src.Backend.Interprete.Utils;
 
 
 var builder = WebApplication.CreateBuilder(args);  //se cera laapi
@@ -30,7 +30,7 @@ app.UseAuthorization(); // Autorización en el middleware de .NET
 
 // Endpoints
 
-app.MapGet("/", () => "OLC2_Proyecto1_201612218");
+app.MapGet("/", () => "OLC2_Proyecto2_201612218");
 var controlador = new Controlador();
 
 var ast = "";

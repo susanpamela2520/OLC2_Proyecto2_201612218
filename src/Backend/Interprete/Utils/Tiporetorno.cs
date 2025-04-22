@@ -1,7 +1,7 @@
 using Antlr4.Runtime.Atn;
-using OLC2_Proyecto1_201612218.src.Backend.Interprete.Entorno1;
+using OLC2_Proyecto2_201612218.src.Backend.Interprete.Entorno1;
 
-namespace OLC2_Proyecto1_201612218.src.Backend.Interprete.Utils;
+namespace OLC2_Proyecto2_201612218.src.Backend.Interprete.Utils;
 
 public class TipoRetorno {
 

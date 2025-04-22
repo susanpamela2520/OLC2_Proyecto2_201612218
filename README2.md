@@ -1,4 +1,4 @@
-# OLC2_Proyecto1_201612218
+# OLC2_Proyecto2_201612218
 
 ## 201612218 - Susan Pamela Herrera Monzon 
 

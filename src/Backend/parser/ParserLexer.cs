@@ -20,12 +20,12 @@
 #pragma warning disable 419
 
 
-    namespace OLC2_Proyecto1_201612218.src.Backend.parser;
-     using OLC2_Proyecto1_201612218.src.Backend.Interprete.Utils;
-     using OLC2_Proyecto1_201612218.src.Backend.Interprete.Abstracts;
-     using OLC2_Proyecto1_201612218.src.Backend.Interprete.Expresiones;
-     using OLC2_Proyecto1_201612218.src.Backend.Interprete.Instrucciones;
-     using MiSwitch = OLC2_Proyecto1_201612218.src.Backend.Interprete.Instrucciones.Switch;
+    namespace OLC2_Proyecto2_201612218.src.Backend.parser;
+     using OLC2_Proyecto2_201612218.src.Backend.Interprete.Utils;
+     using OLC2_Proyecto2_201612218.src.Backend.Interprete.Abstracts;
+     using OLC2_Proyecto2_201612218.src.Backend.Interprete.Expresiones;
+     using OLC2_Proyecto2_201612218.src.Backend.Interprete.Instrucciones;
+     using MiSwitch = OLC2_Proyecto2_201612218.src.Backend.Interprete.Instrucciones.Switch;
      
 
 using System;

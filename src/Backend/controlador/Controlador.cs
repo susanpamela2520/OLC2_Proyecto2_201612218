@@ -4,7 +4,7 @@ using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
 
 
-namespace OLC2_Proyecto1_201612218.src.Backend.controlador;
+namespace OLC2_Proyecto2_201612218.src.Backend.controlador;
 
 public class Controlador {
     //Comenzar a graficar desde el nodo raiz.
