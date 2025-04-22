@@ -19,10 +19,7 @@ public class Return:Expresion{
 
     public override TipoRetorno Interpretar(Entorno e)
     {
-       if(Expresion != null){
-            return Expresion.Interpretar(e);
-       }
-       return new TipoRetorno(tipoE, Tipo.NIL);
-    }
+      
 
+}
 }

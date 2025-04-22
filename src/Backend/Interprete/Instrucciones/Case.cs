@@ -25,23 +25,5 @@ public void EnviarArgumento(TipoRetorno valorArgumento){
 
     public override TipoRetorno? Interpretar(Entorno e)
     {
-        Entorno local = new(e, e.Nombre);
-        if(Valor!= null){
-            TipoRetorno? valorCase = Valor.Interpretar(local);
-            if(valorCase.Valor.Equals(ValorArgumento.Valor)){
-                TipoRetorno? bloque = Bloque.Interpretar(local);
-                if(bloque != null){
-                    return bloque;
-                }
-                return new Break(0,0).Interpretar(local);
-            }
-        }else{            
-            TipoRetorno? bloque = Bloque.Interpretar(local);
-                    if(bloque != null){
-                        return bloque;
-                    }
         }
-        return null;
-    }
-
 }

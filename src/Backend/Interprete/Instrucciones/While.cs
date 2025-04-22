@@ -23,24 +23,6 @@ public While(int linea, int columna, Expresion condicion, Instruccion bloque)
 
     public override TipoRetorno? Interpretar(Entorno e)
     {
-
-        Entorno local = new (e, e.Nombre);
-        TipoRetorno condicion = Condicion.Interpretar(local);
-
-            while(condicion.Valor.Equals ("true")){
-                TipoRetorno bloque = Bloque.Interpretar(local);
-                if(bloque!= null){
-                    if(bloque.Valor.Equals (TipoI.CONTINUE)){
-                         condicion = Condicion.Interpretar(local);
-                         continue;
-                    }
-                    if(bloque.Valor.Equals (TipoI.BREAK)){
-                         break;
-                    }
-                    return bloque;
-                }
-                 condicion = Condicion.Interpretar(local);
-            }
-            return null;
+      
     }
 }

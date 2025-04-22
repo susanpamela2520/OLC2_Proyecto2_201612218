@@ -17,26 +17,10 @@ public class Primitivo:Expresion{
 
     public override TipoRetorno Interpretar(Entorno e)
     {
-       //Console.WriteLine(double.Parse(Valor.ToString()??"0.0", CultureInfo.InvariantCulture));
-       return Tipo switch {
-        Tipo.INT => new TipoRetorno (int.Parse(Valor.ToString()??"0"), Tipo),
-        Tipo.FLOAT => new TipoRetorno (double.Parse(Valor.ToString()??"0.0", CultureInfo.InvariantCulture),Tipo),
-        Tipo.BOOL => new TipoRetorno (Valor.Equals("true") ? "true" : "false",Tipo),
-        Tipo.RUNE => new TipoRetorno (FormatearValor()??"\0",Tipo),
-        Tipo.STRING => new TipoRetorno (FormatearValor()??"",Tipo),
-        _ => new TipoRetorno ("nil",Tipo),
-
-
-       };
-
+       
     }
 
     public string? FormatearValor() { 
-        return Valor.ToString()? 
-            .Replace("\\n", "\n")
-            .Replace("\\t", "\t")
-            .Replace("\\\"", "\"")
-            .Replace("\\'", "\'")
-            .Replace("\\\\", "\\");
+       
     }
 } 

@@ -15,7 +15,7 @@ public class Continue:Instruccion{
     public override TipoRetorno Interpretar(Entorno e)
     {
       
-       return new TipoRetorno(Tipoi, Tipo.NIL);
+     
     }
 
 }

@@ -23,25 +23,6 @@ public If(int linea, int columna, Expresion condicion, Instruccion bloque, Instr
 
     public override TipoRetorno? Interpretar(Entorno e)
     {
-        Entorno local = new (e, e.Nombre);
-        TipoRetorno condicion = Condicion.Interpretar(local);
-
-            if(condicion.Valor.Equals ("true")){
-                TipoRetorno bloque = Bloque.Interpretar(local);
-                if(bloque!= null){
-                    return bloque;
-                }
-                return null;
-            }
-            if(Else != null ){
-                TipoRetorno else_ = Else.Interpretar(local);
-                 if(else_!= null){
-                    return else_;
-                }
-               
-            }
-
-        return null;
-    }
+       }
 
 }

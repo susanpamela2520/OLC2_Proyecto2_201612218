@@ -28,36 +28,7 @@ public ForEach (int linea, int columna, string indice, string valor,  Expresion 
     public override TipoRetorno? Interpretar(Entorno e)
     {
 
-        Entorno local = new (e, e.Nombre);
-        int contadorIndice = 0;
-        local.GuardarVariable(Indice, new Primitivo(0,0, contadorIndice, Tipo.INT).Interpretar(local), new Tipodato(Tipo.INT), Linea, Columna);
-
-        TipoRetorno miSlice = Slice.Interpretar(local);
-        local.GuardarVariable(Valor, new TipoRetorno(null, miSlice.Tipobase, miSlice.Tiposecundario, miSlice.Dimensiones ), miSlice.GetTipo(), Linea, Columna);
-
-        List <TipoRetorno> miOtroSlice = (List <TipoRetorno>) miSlice.Valor;
-
-        while(contadorIndice < miOtroSlice.Count){
-            TipoRetorno miValor = miOtroSlice[contadorIndice];
-            local.ActualizarVariable(Valor, new TipoRetorno(miValor.Valor, miValor.Tipobase, miValor.Tiposecundario, miValor.Dimensiones), 0,0);
-              TipoRetorno bloque = Bloque.Interpretar(local);
-                 if(bloque!= null){
-                    if(bloque.Valor.Equals (TipoI.CONTINUE)){
-                        contadorIndice ++; 
-                        local.ActualizarVariable(Indice, new Primitivo(0,0, contadorIndice, Tipo.INT).Interpretar(local), 0,0);
-                         continue;
-                    }
-                    if(bloque.Valor.Equals (TipoI.BREAK)){
-                         break;
-                    }
-                    return bloque;
-                 }
-
-                contadorIndice ++; 
-                local.ActualizarVariable(Indice, new Primitivo(0,0, contadorIndice, Tipo.INT).Interpretar(local), 0,0);
-         }
-
-        return null;
+       
     }
 
 }

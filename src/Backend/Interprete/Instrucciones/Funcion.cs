@@ -30,14 +30,7 @@ public class Funcion: Instruccion {
 
     public override TipoRetorno? Interpretar(Entorno e)
     {
-        e.Guardarfuncion (this);
-        if (Nombre.Equals("main")){
-            //llamada a funcion
-
-            new Llamadafunc (0,0 , Nombre, new List<Expresion>()).Interpretar(e);
-
-        }
-            return null;
+       
 
     }
 

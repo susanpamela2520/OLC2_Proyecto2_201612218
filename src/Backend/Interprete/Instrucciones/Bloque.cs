@@ -20,19 +20,7 @@ public class Bloque:Instruccion{
 
     public override TipoRetorno? Interpretar(Entorno e)
     {
-        Entorno local = new (e, e.Nombre);  //entorno que llega de manera global  
         
-        TipoRetorno? retorno;   //puede aceptar un null o valor
-        foreach(Statement instruccion in Instrucciones){
-
-            retorno = instruccion.Interpretar(local);
-            if (retorno!= null){
-                return retorno;
-            }
-        }
-        
-
-        return null;
     }
 
 

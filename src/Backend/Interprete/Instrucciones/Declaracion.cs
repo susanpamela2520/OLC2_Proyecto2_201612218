@@ -42,60 +42,7 @@ public class Declaracion:Instruccion{
     public override TipoRetorno? Interpretar(Entorno e)
     {
 
-                if(Tipo != null ){
-
-                        //Declaraciones con tipo y valor
-                        if(Valor != null){
-
-                            TipoRetorno retorno = Valor.Interpretar(e);
-
-                            if (retorno.Tipobase != Utils.Tipo.SLICE && (retorno.Tipobase == Tipo.Tipobase|| Tipo.Tipobase == Utils.Tipo.FLOAT && retorno.Tipobase == Utils.Tipo.INT)){
-                                if(Tipo.Tipobase == Utils.Tipo.FLOAT && retorno.Tipobase == Utils.Tipo.INT){
-                                        retorno.Tipobase = Tipo.Tipobase;
-                                }
-                                e.GuardarVariable(Nombre, retorno, Tipo, Linea, Columna);
-                                return null;
-
-                            } 
-
-                            if(retorno.Tipobase == Utils.Tipo.SLICE && retorno.Tipobase == Tipo.Tipobase && retorno.Dimensiones == Tipo.Dimensiones && (retorno.Tiposecundario == Tipo.Tiposecundario || Tipo.Tiposecundario == Utils.Tipo.FLOAT && retorno.Tiposecundario == Utils.Tipo.INT)){
-                                if(Tipo.Tiposecundario == Utils.Tipo.FLOAT && retorno.Tiposecundario == Utils.Tipo.INT){
-                                    retorno.Intfloat();
-                                }
-                                e.GuardarVariable(Nombre, retorno, retorno.GetTipo(), Linea, Columna);
-                            
-                             return null;
-                            }
-                       
-                            e.GuardarError("Tipos Erroneos en la declaracion", Linea, Columna);
-                            return null; 
-
-                            //Declaraciones con tipo y sin valor
-                        }else{
-                            
-                            TipoRetorno retorno = Tipo.Tipobase switch{
-
-                                Utils.Tipo.INT => new Primitivo(0,0, 0, Tipo.Tipobase).Interpretar(e),
-                                Utils.Tipo.FLOAT => new Primitivo(0,0, 0.0, Tipo.Tipobase).Interpretar(e),
-                                Utils.Tipo.BOOL => new Primitivo(0,0, "false", Tipo.Tipobase).Interpretar(e),
-                                Utils.Tipo.STRING => new Primitivo(0,0, "", Tipo.Tipobase).Interpretar(e),
-                                _ => new Primitivo(0,0, '\0', Tipo.Tipobase).Interpretar(e),
-
-                            };
-
-                            e.GuardarVariable(Nombre, retorno, Tipo, Linea, Columna);
-                            return null;
-
-                        }
-
-//Declaraciones sin tipo y con valor
-                }else{
-                    TipoRetorno retorno = Valor.Interpretar(e);
-                    //Console.WriteLine(retorno.Valor);
-
-                     e.GuardarVariable(Nombre, retorno, retorno.GetTipo(), Linea, Columna);
-                            return null;
-                }
+              
 
     }
 

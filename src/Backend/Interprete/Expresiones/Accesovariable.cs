@@ -28,36 +28,7 @@ public Accesovariable(int linea, int columna, string nombre, List < Expresion > 
     public override TipoRetorno Interpretar(Entorno e)
     {
 
-            Variable? variable = null;
-
-        if(Indices == null){
-            variable = e.ObtenerVariable(Nombre,Linea, Columna);
-        }else{
-            //acceder a posiciones de Slice   
-            List <int []> indices = new ();
-
-            TipoRetorno indice;
-            foreach(Expresion i in Indices){
-                indice = i.Interpretar(e);
-                if(indice.Tipobase != Tipo.INT){
-
-                    e.GuardarError ($"Los indices solo pueden ser de tipo Int ", i.Linea, i.Columna);
-                    return new TipoRetorno("nil", Tipo.NIL);
-                }
-
-                    indices.Add(new []{int.Parse(indice.Valor.ToString()), i.Linea, i.Columna});
-            }
-            variable = e.ObtenerVariable(Nombre, indices, Linea, Columna);
-
-        }
-
-        if(variable != null){
-            return variable.Valor;
-        }
-
-        return new TipoRetorno("nil", Tipo.NIL);
-        
-
+           
     }
 
 

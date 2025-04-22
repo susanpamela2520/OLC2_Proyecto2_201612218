@@ -29,30 +29,7 @@ public For (int linea, int columna, Instruccion inicializacion, Expresion condic
     public override TipoRetorno? Interpretar(Entorno e)
     {
 
-        Entorno local = new (e, e.Nombre);
-        Inicializacion.Interpretar(local); //se inicializa la variable de iteracion.
-
-        TipoRetorno condicion = Condicion.Interpretar(local);
-
-        while(condicion.Valor.Equals ("true")){
-                TipoRetorno bloque = Bloque.Interpretar(local);
-                if(bloque!= null){
-                    if(bloque.Valor.Equals (TipoI.CONTINUE)){
-                         Actualizacion.Interpretar(local);
-                         condicion = Condicion.Interpretar(local);
-                         continue;
-                    }
-                    if(bloque.Valor.Equals (TipoI.BREAK)){
-                         break;
-                    }
-                    return bloque;
-                }
-
-            Actualizacion.Interpretar(local);
-            condicion = Condicion.Interpretar(local);
-        }
-
-        return null;
+        
     }
 
 }

@@ -21,24 +21,7 @@ public class Switch:Instruccion{
 
     public override TipoRetorno? Interpretar(Entorno e)
     {
-        Entorno local = new (e, e.Nombre);  //se crea un nuevo entorno 
-        TipoRetorno valorArgumento = Argumento.Interpretar(local);
-
-        foreach(Case caso in Cases ){
-
-            caso.EnviarArgumento(valorArgumento);
-            TipoRetorno? casoEjecutado = caso.Interpretar(local);
-            if(casoEjecutado!= null){
-                if(casoEjecutado.Valor.Equals(TipoE.RETORNO)){
-                    return null;
-                }
-                if(casoEjecutado.Valor.Equals(TipoI.BREAK)){
-                    return null;
-                }
-               return casoEjecutado; 
-            }
-        }
-        return null;
+       
     }
 
 }

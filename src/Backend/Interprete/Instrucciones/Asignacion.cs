@@ -34,29 +34,7 @@ Indices = indices;
     public override TipoRetorno? Interpretar(Entorno e)
     {
       
-        TipoRetorno valor = Valor.Interpretar(e);
-        if(Indices == null ){
-             e.ActualizarVariable(Variable,valor, Linea, Columna);
-        }else{
-
-            List <int []> indices = new ();
-
-            TipoRetorno indice;
-            foreach(Expresion i in Indices){
-                indice = i.Interpretar(e);
-                if(indice.Tipobase != Tipo.INT){
-
-                    e.GuardarError ($"Los indices solo pueden ser de tipo Int ", i.Linea, i.Columna);
-                    return new TipoRetorno("nil", Tipo.NIL);
-                }
-
-                    indices.Add(new []{int.Parse(indice.Valor.ToString()), i.Linea, i.Columna});
-            }
-             e.ActualizarVariable(Variable, indices, valor, Linea, Columna);
-
-        }
        
-        return null;
 
     }
 
