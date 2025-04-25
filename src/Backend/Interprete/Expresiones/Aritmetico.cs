@@ -1,5 +1,6 @@
 using OLC2_Proyecto2_201612218.src.Backend.Interprete.Abstracts;
 using OLC2_Proyecto2_201612218.src.Backend.Interprete.Entorno1;
+using OLC2_Proyecto2_201612218.src.Backend.Interprete.Generador;
 using OLC2_Proyecto2_201612218.src.Backend.Interprete.Instrucciones;
 using OLC2_Proyecto2_201612218.src.Backend.Interprete.Utils;
 
@@ -22,38 +23,36 @@ Signo = signo;
 
 }
 
-    public override TipoRetorno Interpretar(Entorno e)
+    public override TipoRetorno Interpretar(Entorno e, GenARM gen)
     {
         
+        return null;
     }
 
-public TipoRetorno suma(Entorno e){
+public TipoRetorno suma(Entorno e, GenARM gen){
    
-    
-
-    
-
+    return null;
     
 }
-public TipoRetorno resta(Entorno e){
+public TipoRetorno resta(Entorno e, GenARM gen){
    
    
     
+return null;
+    
+}
+public TipoRetorno multiplicacion(Entorno e, GenARM gen){
+   
+    return null;
+}
+public TipoRetorno division(Entorno e, GenARM gen){
+   
+    return null;
+}
 
-    
-}
-public TipoRetorno multiplicacion(Entorno e){
+public TipoRetorno modulo(Entorno e, GenARM gen){
    
-    
-}
-public TipoRetorno division(Entorno e){
-   
-    
-}
-
-public TipoRetorno modulo(Entorno e){
-   
-    
+    return null;
 }
 
 

@@ -1,5 +1,6 @@
 using OLC2_Proyecto2_201612218.src.Backend.Interprete.Abstracts;
 using OLC2_Proyecto2_201612218.src.Backend.Interprete.Entorno1;
+using OLC2_Proyecto2_201612218.src.Backend.Interprete.Generador;
 using OLC2_Proyecto2_201612218.src.Backend.Interprete.Instrucciones;
 using OLC2_Proyecto2_201612218.src.Backend.Interprete.Utils;
 
@@ -19,9 +20,10 @@ public class Llamadafunc:Expresion{
         
     }
 
-    public override TipoRetorno? Interpretar (Entorno e){  //e entorno que llega
+    public override TipoRetorno? Interpretar (Entorno e, GenARM gen){  //e entorno que llega
 
-    
+    return null;
+
     }
 
 

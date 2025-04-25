@@ -5,6 +5,7 @@ using OLC2_Proyecto2_201612218.src.Backend.Interprete.Utils;
 using System.Text.RegularExpressions;
 using System.Globalization;
 using System.Security.Cryptography.X509Certificates;
+using OLC2_Proyecto2_201612218.src.Backend.Interprete.Generador;
 
 namespace OLC2_Proyecto2_201612218.src.Backend.Interprete.Expresiones;
 
@@ -31,9 +32,9 @@ public Embebidas(int linea, int columna, string nombre, Expresion argumento, Exp
     Argumento2 = argumento2;
 }
 
-    private TipoRetorno Atoi(Entorno e){
+    private TipoRetorno Atoi(Entorno e, GenARM gen){
 
-        TipoRetorno valorArgumento = Argumento.Interpretar(e);
+        TipoRetorno valorArgumento = Argumento.Interpretar(e, gen);
         if(valorArgumento.Tipobase == Tipo.STRING){
             if(Regex.IsMatch(valorArgumento.Valor.ToString(),@"^\d+$")){
                 return new TipoRetorno(int.Parse(valorArgumento.Valor.ToString()), Tipo.INT);
@@ -45,38 +46,40 @@ public Embebidas(int linea, int columna, string nombre, Expresion argumento, Exp
         return new TipoRetorno("nil", Tipo.NIL);
     }
 
-    private TipoRetorno ParseFloat(Entorno e){
+    private TipoRetorno ParseFloat(Entorno e, GenARM gen){
      
-     
+     return null;
      
      }
 
-    private TipoRetorno TypeOf(Entorno e){
+    private TipoRetorno TypeOf(Entorno e, GenARM gen){
 
-       
+       return null;
     }
     
-   private TipoRetorno Len(Entorno e){
+   private TipoRetorno Len(Entorno e, GenARM gen){
 
-    
+    return null;
    }
-   private TipoRetorno Join(Entorno e){
+   private TipoRetorno Join(Entorno e, GenARM gen){
 
-   
+   return null;
    }
-   private TipoRetorno Index_(Entorno e){
+   private TipoRetorno Index_(Entorno e, GenARM gen){
 
-    
+    return null;
    }
 
-   private TipoRetorno Append(Entorno e){
+   private TipoRetorno Append(Entorno e, GenARM gen){
 
+     return null;
+     
        }
 
 
-    public override TipoRetorno Interpretar(Entorno e)
+    public override TipoRetorno Interpretar(Entorno e, GenARM gen)
     {
 
-
+        return null;
 }
 }

@@ -1,5 +1,6 @@
 using OLC2_Proyecto2_201612218.src.Backend.Interprete.Abstracts;
 using OLC2_Proyecto2_201612218.src.Backend.Interprete.Entorno1;
+using OLC2_Proyecto2_201612218.src.Backend.Interprete.Generador;
 using OLC2_Proyecto2_201612218.src.Backend.Interprete.Instrucciones;
 using OLC2_Proyecto2_201612218.src.Backend.Interprete.Utils;
 
@@ -29,25 +30,26 @@ Signo = signo;
 
 }
 
-    public override TipoRetorno Interpretar(Entorno e)
+    public override TipoRetorno Interpretar(Entorno e, GenARM gen)
     {
+        return null;
         
     }
 
-public TipoRetorno Not(Entorno e){
+public TipoRetorno Not(Entorno e, GenARM gen){
    
-    
+    return null;
 }
 
 
-public TipoRetorno And(Entorno e){
+public TipoRetorno And(Entorno e, GenARM gen){
    
-    
+    return null;
 
 }
-public TipoRetorno Or(Entorno e){
+public TipoRetorno Or(Entorno e, GenARM gen){
    
-    
+    return null;
 }
 
 

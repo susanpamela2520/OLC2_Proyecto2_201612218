@@ -6,6 +6,7 @@ using OLC2_Proyecto2_201612218.src.Backend.Interprete.Entorno1;
 using OLC2_Proyecto2_201612218.src.Backend.Interprete.Instrucciones;
 using OLC2_Proyecto2_201612218.src.Backend.Interprete.Abstracts;
 using OLC2_Proyecto2_201612218.src.Backend.Interprete.Utils;
+using OLC2_Proyecto2_201612218.src.Backend.Interprete.Generador;
 
 
 var builder = WebApplication.CreateBuilder(args);  //se cera laapi
@@ -50,8 +51,10 @@ app.MapPost("/parse", async ([FromBody]Request req) => {
             ast = controlador.DotTree(res, parser.RuleNames);
 
             //cracion de entorno global
-
             Entorno global = new (null, "Global");
+
+            //Generador de ARM
+            GenARM gen = new ();
             
             //Funcion donde se alamcenara la funcion main
             
@@ -62,21 +65,21 @@ app.MapPost("/parse", async ([FromBody]Request req) => {
                         if(((Funcion) instruccion).Nombre == "main"){
                             main = (Funcion) instruccion;
                         }else{
-                            instruccion.Interpretar(global);
+                            instruccion.Interpretar(global, gen);
                        }
                 }else{
-                    instruccion.Interpretar(global);
+                    instruccion.Interpretar(global, gen);
                 }
 
             }
 
             if(main != null){
-                main.Interpretar(global);
+                main.Interpretar(global, gen);
             }
 
-            string salidas = Consola.Salidas();
-
-            return Results.Ok(new { status = 200, salida = salidas});
+        gen.generarCodigo();
+        string salidas = !Consola.Salidas().Equals("") ? Consola.Salidas() : gen.getCodigo();
+        return Results.Ok(new { status = 200, salida = salidas});
 
         }
 

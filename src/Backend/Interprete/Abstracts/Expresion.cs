@@ -1,4 +1,5 @@
 using OLC2_Proyecto2_201612218.src.Backend.Interprete.Entorno1;
+using OLC2_Proyecto2_201612218.src.Backend.Interprete.Generador;
 using OLC2_Proyecto2_201612218.src.Backend.Interprete.Utils;
 
 namespace OLC2_Proyecto2_201612218.src.Backend.Interprete.Abstracts;
@@ -14,6 +15,6 @@ public abstract class Expresion:Statement{
         tipoE = tipoe;
 
     }
-public abstract override TipoRetorno Interpretar (Entorno e);
+public abstract override TipoRetorno Interpretar (Entorno e, GenARM gen);
 
 }

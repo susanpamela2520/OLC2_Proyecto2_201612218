@@ -8,42 +8,7 @@ var editor = CodeMirror(document.getElementById("editor"), {
     caseFold: true,
     theme: "VSCode",
     value:`func main() {
-   // 5. Función slices.Index (1 punto)
-	fmt.Println("\\n==== Función slices.Index ====")
-	puntosIndex := 0
-
-	fmt.Println("Búsqueda de elementos con slices.Index:")
-    numeros := []int{10, 20, 30, 40, 50}
-	indice1 := slices.Index(numeros, 30)
-	indice2 := slices.Index(numeros, 60) // No existe, debería retornar -1
-	fmt.Println("Índice de 30:", indice1)
-	fmt.Println("Índice de 60:", indice2)
-
-	if indice1 == 2 && indice2 == -1 {
-		puntosIndex = puntosIndex + 1
-		fmt.Println("OK slices.Index: correcto")
-	} else {
-		fmt.Println("X slices.Index: incorrecto")
-	}
-
-	// 6. Función Strings.Join (1 punto)
-	fmt.Println("\\n==== Función Strings.Join ====")
-	puntosJoin := 0
-
-	fmt.Println("Unión de strings con strings.Join:")
-	palabras := []string{"Hola", "mundo", "desde", "Go"}
-	frase := strings.Join(palabras, " ")
-	fraseConComas := strings.Join(palabras, ", ")
-	fmt.Println("Frase con espacios:", frase)
-	fmt.Println("Frase con comas:", fraseConComas)
-
-	if frase == "Hola mundo desde Go" && fraseConComas == "Hola, mundo, desde, Go" {
-		puntosJoin = puntosJoin + 1
-		fmt.Println("OK strings.Join: correcto")
-        
-	} else {
-		fmt.Println("X strings.Join: incorrecto")
-	}
+	fmt.Println(2 + 2)
 }`
 });
 
@@ -52,10 +17,56 @@ editor.setSize(null, window.innerHeight - document.getElementById("editor").offs
 	editor.setSize(null, window.innerHeight - document.getElementById("editor").offsetTop - 16);
 });
 
+CodeMirror.defineMode("arm64", function() {
+    return {
+        token: function(stream, _) {
+            if(stream.match(/\s+|,|\(|\)/)) {
+                return null
+            }
+            if(stream.match(/\/\/[^\n]*/)) {
+                return "comment";
+            }
+            if(stream.match(/^0x[0-9A-Fa-f]+$/)) {
+                return "number";
+            }
+            if(stream.match(/\#\-?[0-9]+(\.[0-9]+)?/)) {
+                return "number";
+            }
+            if(stream.match(/\.\b(?:global|text|data|word)\b/)) {
+                return "builtin";
+            }
+            if(stream.match(/ecall/)) {
+                return "def";
+            }
+            if(stream.match(/\b(?:svc|cmp|mov|adr|ldr|str|addi|subi|add|sub|mul|sdiv|udiv)\b/)) {
+                return "keyword";
+            }
+            if(stream.match(/\b(?:b((\.(eq|ne|lt))|le?|r)?|ret)\b/)) {
+                return "variable";
+            }
+            if(stream.match(/\b(?:w([1-3][0-9]|[0-9]|zr|sp)|x([1-3][0-9]|[0-9]|zr)|sp|lr|fp)\b/)) {
+                return "attribute";
+            }
+            if(stream.match(/\"([^\n\"\\]|\\.)*\"/)) {
+                return "string";
+            }
+            if(stream.match(/[a-zA-Z_$][a-zA-Z0-9_$]*:?/)) {
+                return null
+            }
+            stream.next();
+            return 'error';
+        }
+    };
+});
+
 var out = CodeMirror(document.getElementById("console"), {
-    mode: "text",
+    mode: "arm64",
     lineNumbers: true,
-    styleActiveLine: false,
+    indentUnit: 4,
+    indentWithTabs: true,
+    autoCloseBrackets: true,
+    matchBrackets: true,
+    styleActiveLine: true,
     readOnly: true,
     cursorHeight: 0,
     lineWrapping: false,
