@@ -35,10 +35,10 @@ public class Primitivo : Expresion {
                     floatParts[i] = (short) ((floatBits >> (i * 16)) & 0xFFFF);
                 }
 
-                gen.Movz(R.x0, $"#{floatParts[0]}", "#0");
+                gen.Movz(R.x0, floatParts[0], 0);
 
                 for(int i = 1; i < 4; i ++) {
-                    gen.Movk(R.x0, $"{floatParts[i]}", $"{i * 16}");
+                    gen.Movk(R.x0, floatParts[i], i * 16);
                 }
 
                 gen.Push(R.x0);

@@ -24,7 +24,9 @@ public class Print : Instruccion {
                 gen.ImprimirInt(R.x0);
             }else if(valor.Type == Tipo.STRING){
                 gen.ImprimirString(R.x0);
-            } 
+            }else if(valor.Type == Tipo.FLOAT){
+                gen.ImprimirFloat(R.x0);
+            }
             espacio = true;
             
         }

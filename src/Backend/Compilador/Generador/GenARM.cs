@@ -181,12 +181,12 @@ public class GenARM {
         Instrucciones.Add($"\tmov {r}, #{imm}");
     }
 
-    public void Movz(R r1, string valor, string valor2) {
-        Instrucciones.Add($"\tmovz {r1}, {valor}, lsl {valor2}");
+    public void Movz(R r1, int valor1, int valor2) {
+        Instrucciones.Add($"\tmovz {r1}, #{valor1}, lsl #{valor2}");
     }
 
-    public void Movk(R r1, string valor1, string valor2) {
-        Instrucciones.Add($"\tmovk {r1}, {valor1}, lsl {valor2}");
+    public void Movk(R r1, int valor1, int valor2) {
+        Instrucciones.Add($"\tmovk {r1}, #{valor1}, lsl #{valor2}");
     }
 
     //Agrega una llamada de sistemas
@@ -203,6 +203,11 @@ public class GenARM {
         stdLib.Use("print_integer");
         Instrucciones.Add($"\tmov x0, {rs}");
         Instrucciones.Add("\tbl print_integer");
+    }
+    public void ImprimirFloat(R rs) {
+        stdLib.Use("print_double");
+        Instrucciones.Add($"\tmov x0, {rs}");
+        Instrucciones.Add("\tbl print_double");
     }
 
     public void ImprimirString(R rs) {

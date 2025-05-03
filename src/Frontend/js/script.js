@@ -10,7 +10,9 @@ var editor = CodeMirror(document.getElementById("editor"), {
     value:`func main() {
 	
     var saludo string = "hola"
-    fmt.Println(saludo, "mundo")
+    var n float64 = 3.1416
+
+    fmt.Println(saludo, "mundo", n)
 	
 }`
 });
