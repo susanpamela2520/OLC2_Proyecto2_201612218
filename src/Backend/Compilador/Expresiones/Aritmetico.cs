@@ -50,8 +50,31 @@ Signo = signo;
         Op2.Interpretar(gen); // | 3 | 2 |
 
         // Operando derecho
-        var derecha = gen.PopObjeto(R.x1); // | 2 |
-        var izquierda = gen.PopObjeto(R.x0); // | |
+        var derechaFloat = gen.TopePila().Type == Tipo.FLOAT;
+        var derecha = gen.PopObjeto(derechaFloat? R.d0:R.x0); // | 2 |
+        var izquierdaFloat = gen.TopePila().Type == Tipo.FLOAT;
+        var izquierda = gen.PopObjeto(izquierdaFloat? R.d1:R.x1); // | |
+
+        if(derechaFloat || izquierdaFloat){
+            if( !izquierdaFloat ){
+                gen.Scvtf(R.d1, R.x1);
+            }
+            if( !derechaFloat ){
+                gen.Scvtf(R.d0, R.x0);
+            }
+
+        // Suma de Enteros
+        gen.FAdd(R.d0, R.d1, R.d0); // 3 + 2 = 5
+
+        // Pushear el Resultado
+        gen.Push(R.d0); // | 5 |
+
+        gen.PushObjeto(gen.ClonarObjeto(izquierdaFloat? izquierda:derecha));
+
+        gen.AddComentario("--- Fin Aritmetica (+) ---");
+        
+            return null;
+        }
 
         // Suma de Enteros
         gen.Add(R.x0, R.x0, R.x1); // 3 + 2 = 5
@@ -71,11 +94,35 @@ Signo = signo;
         Op2.Interpretar(gen); // | 3 | 2 |
 
         // Operando derecho
-        var derecha = gen.PopObjeto(R.x1); // | 2 |
-        var izquierda = gen.PopObjeto(R.x0); // | |
+       var derechaFloat = gen.TopePila().Type == Tipo.FLOAT;
+        var derecha = gen.PopObjeto(derechaFloat? R.d0:R.x0); // | 2 |
+        var izquierdaFloat = gen.TopePila().Type == Tipo.FLOAT;
+        var izquierda = gen.PopObjeto(izquierdaFloat? R.d1:R.x1);
+
+        if(derechaFloat || izquierdaFloat){
+            if( !izquierdaFloat ){
+                gen.Scvtf(R.d1, R.x1);
+            }
+            if( !derechaFloat ){
+                gen.Scvtf(R.d0, R.x0);
+            }
+
+        // Suma de Enteros
+        gen.FSub(R.d0, R.d1, R.d0); // 3 + 2 = 5
+
+        // Pushear el Resultado
+        gen.Push(R.d0); // | 5 |
+
+        gen.PushObjeto(gen.ClonarObjeto(izquierdaFloat? izquierda:derecha));
+
+        gen.AddComentario("--- Fin Aritmetica (-) ---");
+        
+            return null;
+        }
+
 
         // Resta de Enteros
-        gen.Sub(R.x0, R.x0, R.x1); // 3 - 2 = 1
+        gen.Sub(R.x0, R.x1, R.x0); // 3 - 2 = 1
 
         // Pushear el Resultado
         gen.Push(R.x0); // | 1 |
@@ -92,11 +139,35 @@ Signo = signo;
         Op2.Interpretar(gen); // | 3 | 2 |
 
         // Operando derecho
-        var derecha = gen.PopObjeto(R.x1); // | 2 |
-        var izquierda = gen.PopObjeto(R.x0); // | |
+         var derechaFloat = gen.TopePila().Type == Tipo.FLOAT;
+        var derecha = gen.PopObjeto(derechaFloat? R.d0:R.x0); // | 2 |
+        var izquierdaFloat = gen.TopePila().Type == Tipo.FLOAT;
+        var izquierda = gen.PopObjeto(izquierdaFloat? R.d1:R.x1);
+
+        if(derechaFloat || izquierdaFloat){
+            if( !izquierdaFloat ){
+                gen.Scvtf(R.d1, R.x1);
+            }
+            if( !derechaFloat ){
+                gen.Scvtf(R.d0, R.x0);
+            }
+
+        // Multi de Enteros
+        gen.FMul(R.d0, R.d1, R.d0); // 3 + 2 = 5
+
+        // Pushear el Resultado
+        gen.Push(R.d0); // | 5 |
+
+        gen.PushObjeto(gen.ClonarObjeto(izquierdaFloat? izquierda:derecha));
+
+        gen.AddComentario("--- Fin Aritmetica (*) ---");
+        
+            return null;
+        }
+
 
         // Multiplicación de Enteros
-        gen.Mul(R.x0, R.x0, R.x1); // 3 * 2 = 6
+        gen.Mul(R.x0, R.x1, R.x0); // 3 * 2 = 6
 
         // Pushear el Resultado
         gen.Push(R.x0); // | 6 |
@@ -113,11 +184,35 @@ Signo = signo;
         Op2.Interpretar(gen); // | 3 | 2 |
 
         // Operando derecho
-        var derecha = gen.PopObjeto(R.x1); // | 2 |
-        var izquierda = gen.PopObjeto(R.x0); // | |
+        var derechaFloat = gen.TopePila().Type == Tipo.FLOAT;
+        var derecha = gen.PopObjeto(derechaFloat? R.d0:R.x0); // | 2 |
+        var izquierdaFloat = gen.TopePila().Type == Tipo.FLOAT;
+        var izquierda = gen.PopObjeto(izquierdaFloat? R.d1:R.x1);
+        
+        if(derechaFloat || izquierdaFloat){
+            if( !izquierdaFloat ){
+                gen.Scvtf(R.d1, R.x1);
+            }
+            if( !derechaFloat ){
+                gen.Scvtf(R.d0, R.x0);
+            }
+
+        // Suma de Enteros
+        gen.FDiv(R.d0, R.d1, R.d0); // 3 + 2 = 5
+
+        // Pushear el Resultado
+        gen.Push(R.d0); // | 5 |
+
+        gen.PushObjeto(gen.ClonarObjeto(izquierdaFloat? izquierda:derecha));
+
+        gen.AddComentario("--- Fin Aritmetica (/) ---");
+        
+            return null;
+        }
+
 
         // División de Enteros
-        gen.Div(R.x0, R.x0, R.x1); // 3 / 2 = 1
+        gen.Div(R.x0, R.x1, R.x0); // 3 / 2 = 1
 
         // Pushear el Resultado
         gen.Push(R.x0); // | 1 |

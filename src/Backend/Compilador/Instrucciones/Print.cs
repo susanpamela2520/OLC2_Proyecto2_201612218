@@ -19,13 +19,14 @@ public class Print : Instruccion {
                 gen.ImprimirEspacio();
             }
             exp.Interpretar(gen); // expresion: 1 + 2 = 3 // Stack: | 3 |
-            var valor = gen.PopObjeto(R.x0);
+            var valorFloat = gen.TopePila().Type == Tipo.FLOAT;
+            var valor = gen.PopObjeto(valorFloat? R.d0:R.x0);
             if(valor.Type == Tipo.INT) {
                 gen.ImprimirInt(R.x0);
             }else if(valor.Type == Tipo.STRING){
                 gen.ImprimirString(R.x0);
             }else if(valor.Type == Tipo.FLOAT){
-                gen.ImprimirFloat(R.x0);
+                gen.ImprimirFloat();
             }
             espacio = true;
             

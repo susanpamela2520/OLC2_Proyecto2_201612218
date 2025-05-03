@@ -9,10 +9,19 @@ var editor = CodeMirror(document.getElementById("editor"), {
     theme: "VSCode",
     value:`func main() {
 	
-    var saludo string = "hola"
-    var n float64 = 3.1416
+    var n int = 4; 
 
-    fmt.Println(saludo, "mundo", n)
+     if n == 3{
+        fmt.Println("es igual", n)
+     }else if n==4{
+     
+       fmt.Println("es igual", n)
+     }else{
+        fmt.Println("no es igual", n)
+     
+     }
+
+  
 	
 }`
 });
@@ -44,13 +53,13 @@ CodeMirror.defineMode("arm64", function() {
             if(stream.match(/ecall/)) {
                 return "def";
             }
-            if(stream.match(/\b(?:cbnz|svc|cmp|mov(z|k)?|adr|l(d(rb?|p)|sl)|st(rb?|p)|addi?|m?subi?|mul|(s|u)?div|neg)\b/)) {
+            if(stream.match(/\b(?:cbnz|svc|cmp|mov(z|k)?|adr|l(d(rb?|p)|sl)|st(rb?|p)|f?addi?|f?m?subi?|f?mul|f?(s|u)?div|f?neg)\b/)) {
                 return "keyword";
             }
             if(stream.match(/\b(?:b(ge|eq|ne|lt|le?|r)?|ret)\b/)) {
                 return "variable";
             }
-            if(stream.match(/\b(?:(x|w|v)([0-9]|[1-2][0-9]|3[0-1]|zr)|sp|lr|fp|pc)\b/)) {
+            if(stream.match(/\b(?:(x|d|w|v)([0-9]|[1-2][0-9]|3[0-1]|zr)|sp|lr|fp|pc)\b/)) {
                 return "attribute";
             }
             if(stream.match(/\"([^\n\"\\]|\\.)*\"/)) {

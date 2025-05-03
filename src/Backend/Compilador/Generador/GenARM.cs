@@ -17,6 +17,9 @@ public class GenARM {
         stack.Add(obj);
     }
 
+    public StackObject TopePila (){
+        return stack.Last();       
+     }
     public StackObject PopObjeto(R rd) {
         var obj = stack.Last();
         stack.RemoveAt(stack.Count - 1);
@@ -165,6 +168,65 @@ public class GenARM {
         Instrucciones.Add($"\taddi {rd}, {rs1}, #{imm}");
     }
 
+        //comparacion
+    public void Cmp(R rs1, R rs2) {
+        Instrucciones.Add($"\tcmp {rs1}, {rs2} ");
+    }
+    
+    public void Cbz(R rs, string etiqueta) {
+        Instrucciones.Add($"\tcbz {rs}, {etiqueta} ");
+    }
+    //saltos
+
+    public void Beq(string etiqueta){
+        Instrucciones.Add($"\tbeq  {etiqueta}");
+    }
+
+    public void Bne(string etiqueta){
+        Instrucciones.Add($"\tbne  {etiqueta}");
+    }
+
+    public void Blt(string etiqueta){
+        Instrucciones.Add($"\tblt  {etiqueta}");
+    }
+    public void Bgt(string etiqueta){
+        Instrucciones.Add($"\tbgt  {etiqueta}");
+    }
+    public void Ble(string etiqueta){
+        Instrucciones.Add($"\tble  {etiqueta}");
+    }
+    
+    public void Bge(string etiqueta){
+        Instrucciones.Add($"\tbge  {etiqueta}");
+    }
+
+     public void B(string etiqueta){
+        Instrucciones.Add($"\tb  {etiqueta}");
+    }
+
+    //Operaciones con flotantes 
+
+    public void FAdd(R rd, R rs1, R rs2) {
+        Instrucciones.Add($"\tfadd {rd}, {rs1}, {rs2}");
+    }
+
+    public void FSub(R rd, R rs1, R rs2) {
+        Instrucciones.Add($"\tfsub {rd}, {rs1}, {rs2}");
+    }
+
+    public void FMul(R rd, R rs1, R rs2) {
+        Instrucciones.Add($"\tfmul {rd}, {rs1}, {rs2}");
+    }
+
+    public void FDiv(R rd, R rs1, R rs2) {
+        Instrucciones.Add($"\tfdiv {rd}, {rs1}, {rs2}");
+    }
+
+    public void Scvtf (R rd, R rs){
+         Instrucciones.Add($"\tscvtf {rd}, {rs}");
+    }
+
+
     // Operaciones de Memoria
     public void Str(R rs1, R rs2, int offset = 0) {
         Instrucciones.Add($"\tstr {rs1}, [{rs2}, #{offset}]");
@@ -181,6 +243,10 @@ public class GenARM {
         Instrucciones.Add($"\tmov {r}, #{imm}");
     }
 
+    public void FMov(R rd, R rs) {
+        Instrucciones.Add($"\tfmov {rd}, {rs}");
+    }
+
     public void Movz(R r1, int valor1, int valor2) {
         Instrucciones.Add($"\tmovz {r1}, #{valor1}, lsl #{valor2}");
     }
@@ -194,19 +260,15 @@ public class GenARM {
         Instrucciones.Add($"\tsvc #0");
     }
 
-    public void Scvtf(R rd, R rs) {
-        Instrucciones.Add($"\tscvtf {rd}, {rs}");
-    }
-
     // Impresiones en Consola
     public void ImprimirInt(R rs) {
         stdLib.Use("print_integer");
         Instrucciones.Add($"\tmov x0, {rs}");
         Instrucciones.Add("\tbl print_integer");
     }
-    public void ImprimirFloat(R rs) {
+    public void ImprimirFloat() {
         stdLib.Use("print_double");
-        Instrucciones.Add($"\tmov x0, {rs}");
+        stdLib.Use("print_integer");
         Instrucciones.Add("\tbl print_double");
     }
 
