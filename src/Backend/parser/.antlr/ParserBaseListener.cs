@@ -21,12 +21,11 @@
 
 
     namespace OLC2_Proyecto2_201612218.src.Backend.parser;
-     using OLC2_Proyecto2_201612218.src.Backend.Compilador.Utils;
-     using OLC2_Proyecto2_201612218.src.Backend.Compilador.Abstracts;
-     using OLC2_Proyecto2_201612218.src.Backend.Compilador.Expresiones;
-     using OLC2_Proyecto2_201612218.src.Backend.Compilador.Instrucciones;
-     using MiSwitch = OLC2_Proyecto2_201612218.src.Backend.Compilador.Instrucciones.Switch;
-     
+    using OLC2_Proyecto2_201612218.src.Backend.Compilador.Utils;
+    using OLC2_Proyecto2_201612218.src.Backend.Compilador.Abstracts;
+    using OLC2_Proyecto2_201612218.src.Backend.Compilador.Expresiones;
+    using OLC2_Proyecto2_201612218.src.Backend.Compilador.Instrucciones;
+    using MiSwitch = OLC2_Proyecto2_201612218.src.Backend.Compilador.Instrucciones.Switch;
 
 
 using Antlr4.Runtime.Misc;

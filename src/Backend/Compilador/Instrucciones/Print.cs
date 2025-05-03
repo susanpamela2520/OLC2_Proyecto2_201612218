@@ -12,27 +12,33 @@ public class Print : Instruccion {
     }
 
     public override TipoRetorno? Interpretar(GenARM gen) {
-        gen.AddComentario("=========== Print ===========");
-        var espacio = false;
-        foreach(Expresion exp in Expresiones) {
-            if(espacio){
-                gen.ImprimirEspacio();
+        if(gen.Frame == null) {
+            gen.AddComentario("=========== Print ===========");
+            var espacio = false;
+            foreach(Expresion exp in Expresiones) {
+                if(espacio){
+                    gen.ImprimirEspacio();
+                }
+                exp.Interpretar(gen); // expresion: 1 + 2 = 3 // Stack: | 3 |
+                var valorFloat = gen.TopePila().Type == Tipo.FLOAT;
+                var valor = gen.PopObjeto(valorFloat? R.d0:R.x0);
+                if(valor.Type == Tipo.INT) {
+                    gen.ImprimirInt(R.x0);
+                }else if(valor.Type == Tipo.STRING){
+                    gen.ImprimirString(R.x0);
+                }else if(valor.Type == Tipo.FLOAT){
+                    gen.ImprimirFloat();
+                } else if(valor.Type == Tipo.BOOL) {
+                    gen.ImprimirBool();
+                } else if(valor.Type == Tipo.RUNE) {
+                    gen.ImprimirRune();
+                }
+                espacio = true;
+                
             }
-            exp.Interpretar(gen); // expresion: 1 + 2 = 3 // Stack: | 3 |
-            var valorFloat = gen.TopePila().Type == Tipo.FLOAT;
-            var valor = gen.PopObjeto(valorFloat? R.d0:R.x0);
-            if(valor.Type == Tipo.INT) {
-                gen.ImprimirInt(R.x0);
-            }else if(valor.Type == Tipo.STRING){
-                gen.ImprimirString(R.x0);
-            }else if(valor.Type == Tipo.FLOAT){
-                gen.ImprimirFloat();
-            }
-            espacio = true;
-            
+            gen.ImprimirSalto();
+            gen.AddComentario("========= Fin Print =========");
         }
-        gen.ImprimirSalto();
-        gen.AddComentario("========= Fin Print =========");
         return null;
     }
 

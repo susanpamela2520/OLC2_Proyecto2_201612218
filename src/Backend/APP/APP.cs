@@ -77,9 +77,9 @@ app.MapPost("/parse", async ([FromBody]Request req) => {
                 }
             }
 
-            if(main != null){
-                main.Interpretar(global);
-            }
+            // if(main != null){
+            //     main.Interpretar(global);
+            // }
 
             if(!ConsolaInterprete.Salidas().Equals("")) {
                 return Results.Ok(new { status = 200, salida = ConsolaInterprete.Salidas()});
@@ -96,8 +96,17 @@ app.MapPost("/parse", async ([FromBody]Request req) => {
             //Generador de ARM
             GenARM gen = new ();
 
+            Funcion? main1 = null;
             foreach(Instruccion instruccion in resC.resultado){
-                instruccion.Interpretar(gen);
+                if(((Funcion) instruccion).Nombre == "main"){
+                    main1 = (Funcion) instruccion;
+                }else{
+                    instruccion.Interpretar(gen);
+                }
+            }
+
+            if(main1 != null){
+                main1.Interpretar(gen);
             }
 
             gen.generarCodigo();

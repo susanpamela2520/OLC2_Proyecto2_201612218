@@ -3,17 +3,35 @@ using OLC2_Proyecto2_201612218.src.Backend.Compilador.Utils;
 
 public class GenARM {
     private int ContadorEtiquetas = 0;
-    private List<string> Instrucciones = new();
+    public List<string> Instrucciones = new();
+    public List<string> InstruccionesFunciones = new();
     private readonly StandardLibrary stdLib = new();
     private List<StackObject> stack = new();
     private int depth = 0;
-    
+
     public string? EtiquetaContinue = null;
     public string? EtiquetaBreak = null;
     public string? EtiquetaReturn = null;
 
+    public string? EstaEnFuncion = null;
+    public int fpOffset = 0;
+
+    public Dictionary<string, Metadata> Funciones = new();
+
+    public Frame? Frame;
+
     public GenARM() {
         IniciarPrograma();
+    }
+
+    // Frame de Función
+    public void SetFrame(Frame? frame) {
+        Frame = frame;
+    }
+
+    public StackObject GetFrameLocal(int indice) {
+        var obj = stack.Where(o => o.Type == Tipo.NIL).ToList()[indice];
+        return obj;
     }
 
     // Operaciones con la Pila
@@ -23,12 +41,23 @@ public class GenARM {
 
     public StackObject TopePila (){
         return stack.Last();       
-     }
+    }
+
     public StackObject PopObjeto(R rd) {
         var obj = stack.Last();
         stack.RemoveAt(stack.Count - 1);
         Pop(rd);
         return obj;
+    }
+
+    public void PopObjeto() {
+        AddComentario("Sacando Objeto de la Pila");
+        try {
+            stack.RemoveAt(stack.Count - 1);
+        } catch(System.Exception) {
+            Console.WriteLine(this.ToString());
+            throw new Exception("Pila Vacia");
+        }
     }
 
     public StackObject ObjetoInt() {
@@ -187,25 +216,35 @@ public class GenARM {
     }
 
     public void Bne(string etiqueta){
-        Instrucciones.Add($"\tbne  {etiqueta}");
+        Instrucciones.Add($"\tbne {etiqueta}");
     }
 
     public void Blt(string etiqueta){
-        Instrucciones.Add($"\tblt  {etiqueta}");
-    }
-    public void Bgt(string etiqueta){
-        Instrucciones.Add($"\tbgt  {etiqueta}");
-    }
-    public void Ble(string etiqueta){
-        Instrucciones.Add($"\tble  {etiqueta}");
-    }
-    
-    public void Bge(string etiqueta){
-        Instrucciones.Add($"\tbge  {etiqueta}");
+        Instrucciones.Add($"\tblt {etiqueta}");
     }
 
-     public void B(string etiqueta){
-        Instrucciones.Add($"\tb  {etiqueta}");
+    public void Bgt(string etiqueta){
+        Instrucciones.Add($"\tbgt {etiqueta}");
+    }
+
+    public void Ble(string etiqueta){
+        Instrucciones.Add($"\tble {etiqueta}");
+    }
+
+    public void Bge(string etiqueta){
+        Instrucciones.Add($"\tbge {etiqueta}");
+    }
+
+    public void Br(R rs){
+        Instrucciones.Add($"\tbr {rs}");
+    }
+
+    public void Bl(string etiqueta){
+        Instrucciones.Add($"\tbl {etiqueta}");
+    }
+
+    public void B(string etiqueta){
+        Instrucciones.Add($"\tb {etiqueta}");
     }
 
     //Operaciones con flotantes 
@@ -232,9 +271,14 @@ public class GenARM {
 
 
     // Operaciones de Memoria
+    public void Adr(R rs, string etiqueta) {
+        Instrucciones.Add($"\tadr {rs}, {etiqueta}");
+    }
+
     public void Str(R rs1, R rs2, int offset = 0) {
         Instrucciones.Add($"\tstr {rs1}, [{rs2}, #{offset}]");
     }
+
     public void Strb(R rs1, R rs2) {
         Instrucciones.Add($"\tstrb {rs1}, [{rs2}]");
     }
@@ -282,10 +326,21 @@ public class GenARM {
         Instrucciones.Add("\tbl print_string");
     }
 
+    public void ImprimirBool() {
+        stdLib.Use("print_bool");
+        Instrucciones.Add("\tbl print_bool");
+    }
+
+    public void ImprimirRune() {
+        stdLib.Use("print_rune");
+        Instrucciones.Add("\tbl print_rune");
+    }
+
     public void ImprimirSalto() {
         stdLib.Use("print_new_line");
         Instrucciones.Add("\tbl print_new_line");
     }
+
     public void ImprimirEspacio() {
         stdLib.Use("print_space");
         Instrucciones.Add("\tbl print_space");
@@ -295,7 +350,7 @@ public class GenARM {
     public void IniciarPrograma() {
         Instrucciones.Add(".data");
         Instrucciones.Add("heap: .space 4096");
-       Instrucciones.Add(".text");
+        Instrucciones.Add(".text");
         Instrucciones.Add(".global _start");
         Instrucciones.Add("_start:");
         Instrucciones.Add("\tadr x10, heap"); //x10 punteor de heap
@@ -310,11 +365,11 @@ public class GenARM {
     //Genera la estructura final del codigo
     public void generarCodigo() {
         TerminarPrograma();
-        Instrucciones.Add(@"
+        Instrucciones.Add("\n\n// Foreign Function");
+        Instrucciones.AddRange(InstruccionesFunciones);
 
-// libreria estandar");
-
-Instrucciones.Add(stdLib.GetFunctionDefinitions());
+        Instrucciones.Add("\n\n// Standard Library");
+        Instrucciones.Add(stdLib.GetFunctionDefinitions());
     }
 
     //Obtiene el codigo como un string

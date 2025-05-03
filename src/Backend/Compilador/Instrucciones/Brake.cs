@@ -15,17 +15,16 @@ public class Break:Instruccion{
 
     public override TipoRetorno Interpretar(GenARM gen)
     {
+        if(gen.Frame == null) {
+            gen.AddComentario("Sentencia Break");
 
-        gen.AddComentario("Sentencia Break");
-
-        if(gen.EtiquetaBreak != null){
-
-            gen.B(gen.EtiquetaBreak);
-
+            if(gen.EtiquetaBreak != null){
+                gen.B(gen.EtiquetaBreak);
+            }
+            gen.AddComentario("Fin Sentencia Break");
         }
 
-      return null;
-     
+        return null;
     }
 
 }

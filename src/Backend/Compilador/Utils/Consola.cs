@@ -44,9 +44,9 @@ if (Errores.Count > 0){
 
 public static void Limpiar(){
 
-Impresiones.Clear();
-Errores.Clear();
-TablaSimbolos.Clear();
+    Impresiones.Clear();
+    Errores.Clear();
+    TablaSimbolos.Clear();
 
 }
 

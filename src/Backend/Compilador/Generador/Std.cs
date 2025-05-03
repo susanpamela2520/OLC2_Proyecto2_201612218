@@ -15,7 +15,11 @@ public class StandardLibrary {
             UsedSymbols.Add("zero_char");
         }
         else if(function == "print_space"){
-             UsedSymbols.Add("espacio");
+            UsedSymbols.Add("espacio");
+        }
+        else if(function == "print_bool") {
+            UsedSymbols.Add("true_value");
+            UsedSymbols.Add("false_value");
         }
         UsedSymbols.Add("new_line");
        
@@ -320,6 +324,47 @@ print_space:
     ret
 "
         },
+        { "print_bool", @"
+//--------------------------------------------------------------
+// print_bool - Prints a bool
+//--------------------------------------------------------------
+print_bool:
+    // Print bool
+    cmp x0, #1
+    bne string_false
+    mov x0, #1
+    adr x1, true_value
+    mov x2, #4
+    mov x8, #64
+    svc #0
+    b exit_print_bool
+string_false:
+	mov x0, #1
+    adr x1, false_value
+    mov x2, #5
+    mov x8, #64
+    svc #0
+exit_print_bool:
+    ret
+"
+        },
+        { "print_rune", @"
+//--------------------------------------------------------------
+// print_rune - Prints a rune
+//--------------------------------------------------------------
+print_rune:
+    // Print rune
+    sub     sp, sp, #8         // Reservar espacio en el stack
+    strb    w0, [sp]           // Escribir solo un byte en el stack
+    mov     x0, #1             // stdout
+    mov     x1, sp             // dirección del byte
+    mov     x2, #1             // longitud
+    mov     x8, #64            // syscall write
+    svc     #0
+    add     sp, sp, #8         // Restaurar el stack
+    ret
+"
+        }
     };
 
     private readonly static Dictionary<string, string> Symbols = new() {
@@ -327,6 +372,8 @@ print_space:
         { "dot_char", @"dot_char: .ascii "".""" },
         { "zero_char", @"zero_char: .ascii ""0""" },
         { "new_line", @"new_line: .ascii ""\n""" },
-        {"espacio", @"espacio: .ascii "" """ }
+        { "espacio", @"espacio: .ascii "" """ },
+        { "true_value", @"true_value: .ascii ""true""" },
+        { "false_value", @"false_value: .ascii ""false""" },
     };
 }

@@ -8,30 +8,10 @@ var editor = CodeMirror(document.getElementById("editor"), {
     caseFold: true,
     theme: "VSCode",
     value:`func main() {
-
-    fmt.Println("ciclo for")
-	
-    var n int = 4; 
-    for n>0 {
-            if n == 2 {
-            break;
-            
-            }
-           fmt.Println(n)
-    n--
-
- } 
-    fmt.Println("\\n ciclo for clasico")
-    
-    
-  for i:= 0; i<=5; i++{
-        if i==3  {
-            continue
-        }
-        fmt.Println(i)
-
-    }
-	
+	fmt.Println(3 == 4);
+	fmt.Println(false);
+	fmt.Println('@')
+	fmt.Println('!')
 }`
 });
 
@@ -49,23 +29,19 @@ CodeMirror.defineMode("arm64", function() {
             if(stream.match(/\/\/[^\n]*/)) {
                 return "comment";
             }
-            if(stream.match(/^0x[0-9A-Fa-f]+$/)) {
+            if(stream.match(/\#\-?(0x)?[0-9A-Fa-f]+|[0-9]+/)) {
                 return "number";
             }
-            if(stream.match(/\#?\-?[0-9]+(\.[0-9]+)?/)) {
-                return "number";
-            }
-            
             if(stream.match(/\.\b(?:global|text|data|word|ascii|space)\b/)) {
                 return "builtin";
             }
             if(stream.match(/ecall/)) {
                 return "def";
             }
-            if(stream.match(/\b(?:cbnz|svc|cmp|mov(z|k)?|adr|l(d(rb?|p)|sl)|st(rb?|p)|f?addi?|f?m?subi?|f?mul|f?(s|u)?div|f?neg)\b/)) {
+            if(stream.match(/\b(?:cbn?z|svc|scvtf|f(rint(m|n)|cvtzs)|cmp|tst|f?mov(z|k)?|adr|l(d(rb?|p)|sl)|st(rb?|p)|f?(addi?|m?subi?|mul|(s|u)?div|neg))\b/)) {
                 return "keyword";
             }
-            if(stream.match(/\b(?:b(ge|eq|ne|lt|le?|r)?|ret)\b/)) {
+            if(stream.match(/\b(?:b(eq|ne|l(e|t)?|g(e|t)|r)?|ret)\b/)) {
                 return "variable";
             }
             if(stream.match(/\b(?:(x|d|w|v)([0-9]|[1-2][0-9]|3[0-1]|zr)|sp|lr|fp|pc)\b/)) {

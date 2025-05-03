@@ -5,5 +5,6 @@ public class StackObject {
     public Tipo Type;
     public int Length { get; set; }
     public int Depth { get; set; }
+    public int Offset { get; set; }
     public string? Id { get; set; }
 }

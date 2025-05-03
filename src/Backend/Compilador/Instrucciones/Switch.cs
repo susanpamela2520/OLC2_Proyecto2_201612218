@@ -22,7 +22,9 @@ public class Switch:Instruccion{
 
     public override TipoRetorno? Interpretar(GenARM gen)
     {
-
+        if(gen.Frame == null) {
+            
+        }
         return null;
     }
 

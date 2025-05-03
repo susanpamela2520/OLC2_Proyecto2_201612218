@@ -26,7 +26,7 @@ Signo = signo;
     public override TipoRetorno Interpretar(GenARM gen)
     {
       
- gen.AddComentario($"----- Relacional ({Signo}) -----");
+        gen.AddComentario($"----- Relacional ({Signo}) -----");
         Op1.Interpretar(gen); // | 2 |
         Op2.Interpretar(gen); // | 3 | 2 |
 
@@ -86,13 +86,7 @@ Signo = signo;
         gen.AddEtiqueta(etiquetaFin);
         gen.PushObjeto(gen.ObjetoBool());
 
-        
-        // Pushear el Resultado
-        gen.Push(R.x0); // | 5 |
-
-        gen.PushObjeto(gen.ClonarObjeto(izquierda));
-
-          gen.AddComentario($"--- Fin Relacionales ({Signo}) ---");
+        gen.AddComentario($"--- Fin Relacionales ({Signo}) ---");
         
         return null;
 

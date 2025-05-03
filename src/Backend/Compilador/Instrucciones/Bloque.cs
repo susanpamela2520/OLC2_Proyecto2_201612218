@@ -13,22 +13,28 @@ public class Bloque : Instruccion {
     }
 
     public override TipoRetorno? Interpretar(GenARM gen) {
-        gen.AddComentario("========== Bloque ===========");
-        gen.NuevoEntorno();
+        if(gen.Frame == null) {
+            gen.AddComentario("========== Bloque ===========");
+            gen.NuevoEntorno();
 
-        foreach(Statement stmt in Instrucciones) {
-            stmt.Interpretar(gen);
+            foreach(Statement stmt in Instrucciones) {
+                stmt.Interpretar(gen);
+            }
+
+            var bytesOffset = gen.TerminarEntorno();
+            if(bytesOffset > 0) {
+                gen.AddComentario("---------- Removiendo Bytes de la Pila ----------");
+                gen.Mov(R.x0, bytesOffset);
+                gen.Add(R.sp, R.sp, R.x0);
+                gen.AddComentario("------------ Stack Pointer Ajustado -------------");
+            }
+
+            gen.AddComentario("======== Fin Bloque =========");
+        } else {
+            foreach(Statement stmt in Instrucciones) {
+                stmt.Interpretar(gen);
+            }
         }
-
-        var bytesOffset = gen.TerminarEntorno();
-        if(bytesOffset > 0) {
-            gen.AddComentario("---------- Removiendo Bytes de la Pila ----------");
-            gen.Mov(R.x0, bytesOffset);
-            gen.Add(R.sp, R.sp, R.x0);
-            gen.AddComentario("------------ Stack Pointer Ajustado -------------");
-        }
-
-        gen.AddComentario("======== Fin Bloque =========");
         return null;
     }
 }

@@ -15,6 +15,7 @@
     2. [Tipos De Retorno](#2.2-tipos-de-retorno)
 3. [Clases Abstractas](#3-clases-abstractas)
 4. [Entornos](#4-entornos)
+5.  [Generador ARM64](#5-generador)
 
 
 ## 1. Análisis Léxico Y Sintáctico
@@ -393,3 +394,180 @@ public Funcion? ObtenerFuncion (string nombre, int linea, int columna){
 }
 
 ```
+## 5. Interfaces
+
+
+* Se implementó la clase GeneradorArm que es la clase donde se encuentran los arreglos y variables necesarias para estructurar el codigo, tales como:
+
+```C#
+
+public class GenARM {
+    private int ContadorEtiquetas = 0;
+    public List<string> Instrucciones = new();
+    public List<string> InstruccionesFunciones = new();
+    private readonly StandardLibrary stdLib = new();
+    private List<StackObject> stack = new();
+    private int depth = 0;
+    public string? EtiquetaContinue = null;
+    public string? EtiquetaBreak = null;
+    public string? EtiquetaReturn = null;
+    public string? EstaEnFuncion = null;
+    public int fpOffset = 0;
+    public Dictionary<string, Metadata> Funciones = new();
+    public Frame? Frame;
+}
+
+```
+
+[Subir](#manual-técnico)
+
+* Operaciones con la Pila
+```C#
+
+public void PushObjeto(StackObject obj) {
+        stack.Add(obj);
+    }
+    public StackObject TopePila (){
+        return stack.Last();       
+    }
+    public StackObject PopObjeto(R rd) {
+        var obj = stack.Last();
+        stack.RemoveAt(stack.Count - 1);
+        Pop(rd);
+        return obj;
+    }
+    public void PopObjeto() {
+        AddComentario("Sacando Objeto de la Pila");
+        try {
+            stack.RemoveAt(stack.Count - 1);
+        } catch(System.Exception) {
+            Console.WriteLine(this.ToString());
+            throw new Exception("Pila Vacia");
+        }
+    }
+    public StackObject ObjetoInt() {
+        return new StackObject {
+            Type = Tipo.INT,
+            Length = 8,
+            Depth = depth,
+            Id = null,
+        };
+    }
+    public StackObject ObjetoFloat() {
+        return new StackObject {
+            Type = Tipo.FLOAT,
+            Length = 8,
+            Depth = depth,
+            Id = null,
+        };
+    }
+
+    public StackObject ObjetoBool() {
+        return new StackObject {
+            Type = Tipo.BOOL,
+            Length = 8,
+            Depth = depth,
+            Id = null,
+        };
+    }
+    public StackObject ObjetoRune() {
+        return new StackObject {
+            Type = Tipo.RUNE,
+            Length = 8,
+            Depth = depth,
+            Id = null,
+        };
+    }
+    public StackObject ObjetoString() {
+        return new StackObject {
+            Type = Tipo.STRING,
+            Length = 8,
+            Depth = depth,
+            Id = null,
+        };
+    }
+    public StackObject ClonarObjeto(StackObject obj) {
+        return new StackObject {
+            Type = obj.Type,
+            Length = obj.Length,
+            Depth = obj.Depth,
+            Id = obj.Id,
+        };
+    }
+```
+
+[Subir](#manual-técnico)
+
+* Operaciones de Entorno
+```C#
+public void NuevoEntorno() {
+        depth ++;
+    }
+
+    public int TerminarEntorno() {
+        int byteOffset = 0;
+
+        for(int i = stack.Count - 1; i >= 0; i --) {
+            if(stack[i].Depth == depth) {
+                byteOffset += stack[i].Length;
+                stack.RemoveAt(i);
+            } else {
+                break;
+            }
+        }
+
+        depth --;
+        return byteOffset;
+    }
+
+    public void NombrarObjeto(string id) {
+        stack.Last().Id = id; 
+    }
+
+```
+
+[Subir](#manual-técnico)
+
+* Busca objeto del stack que su id sea igual al del parametro.
+devuelve una tupla (se puede definir el tipo)
+
+```C#
+public (int, StackObject) GetObjeto(string id) {
+        int byteOffset = 0;
+        for(int i = stack.Count - 1; i >= 0; i --) {
+            if(stack[i].Id == id) {
+                return (byteOffset, stack[i]);
+            }
+
+            byteOffset += stack[i].Length;
+        }
+
+        return (-1, null);
+    }
+
+    public void Push(R rd) {
+        Instrucciones.Add($"\tstr {rd}, [sp, #-8]!");
+    }
+
+    public void Pop(R rs) {
+        Instrucciones.Add($"\tldr {rs}, [sp], #8");
+    }
+
+    //Genera una nueva etiqueta
+    public string GetEtiqueta() {
+        string etiqueta = "L" + ContadorEtiquetas;
+        ContadorEtiquetas ++;
+        return etiqueta;
+    }
+
+    //Agrega una etiqueta al codigo
+    public void AddEtiqueta(string label) {
+        Instrucciones.Add($"{label}:");
+    }
+
+    //Agrega un comentario al codigo
+    public void AddComentario(string comment) {
+        Instrucciones.Add($"\t// {comment}");
+    }
+
+    ```

@@ -24,33 +24,36 @@ public While(int linea, int columna, Expresion condicion, Instruccion bloque)
 
     public override TipoRetorno? Interpretar(GenARM gen)
     {
+        if(gen.Frame == null) {
+            gen.AddComentario("========== Instruccion While ===========");
 
-        gen.AddComentario("========== Instruccion While ===========");
+            var etiquetaIncio = gen.GetEtiqueta();
+            var etiquetaFin = gen.GetEtiqueta();
+            var etiquetaContinueAnterior = gen.EtiquetaContinue;
+            var etiquetaBreakAnterior = gen.EtiquetaBreak;
 
-        var etiquetaIncio = gen.GetEtiqueta();
-        var etiquetaFin = gen.GetEtiqueta();
-        var etiquetaContinueAnterior = gen.EtiquetaContinue;
-        var etiquetaBreakAnterior = gen.EtiquetaBreak;
+            gen.EtiquetaContinue = etiquetaIncio;
+            gen.EtiquetaBreak = etiquetaFin;
+            gen.AddEtiqueta(etiquetaIncio);
+            
 
-        gen.EtiquetaContinue = etiquetaIncio;
-        gen.EtiquetaBreak = etiquetaFin;
-        gen.AddEtiqueta(etiquetaIncio);
+            Condicion.Interpretar(gen);
+            gen.PopObjeto(R.x0);
+
+            gen.Cbz(R.x0, etiquetaFin);
+
+            Bloque.Interpretar(gen);
+            gen.B(etiquetaIncio);
+            gen.AddEtiqueta(etiquetaFin);
+
+            gen.EtiquetaContinue = etiquetaContinueAnterior;
+            gen.EtiquetaBreak = etiquetaBreakAnterior;
         
+            gen.AddComentario("========== Fin While ===========");
+        } else {
+            Bloque.Interpretar(gen);
+        }
 
-        Condicion.Interpretar(gen);
-        gen.PopObjeto(R.x0);
-
-        gen.Cbz(R.x0, etiquetaFin);
-
-        Bloque.Interpretar(gen);
-        gen.B(etiquetaIncio);
-        gen.AddEtiqueta(etiquetaFin);
-
-        gen.EtiquetaContinue = etiquetaContinueAnterior;
-        gen.EtiquetaBreak = etiquetaBreakAnterior;
-    
-
-        gen.AddComentario("========== Fin While ===========");
         return null;
 
     }

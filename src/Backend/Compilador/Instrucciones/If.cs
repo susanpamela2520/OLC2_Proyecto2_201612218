@@ -24,36 +24,41 @@ public If(int linea, int columna, Expresion condicion, Instruccion bloque, Instr
 
     public override TipoRetorno? Interpretar(GenARM gen)
     {
-        gen.AddComentario("========== Instruccion If ===========");
+        if(gen.Frame == null) {
+            gen.AddComentario("========== Instruccion If ===========");
 
-        Condicion.Interpretar(gen);
-        gen.PopObjeto(R.x0);
+            Condicion.Interpretar(gen);
+            gen.PopObjeto(R.x0);
 
-        if(Else != null){
-        
-        var etiquetaFalsa = gen.GetEtiqueta();
-        var etiquetaFin = gen.GetEtiqueta();
-        gen.Cbz (R.x0, etiquetaFalsa);
-        Bloque.Interpretar(gen);
-        gen.B(etiquetaFin);
-        gen.AddEtiqueta(etiquetaFalsa);
-        Else.Interpretar(gen);
-
-        gen.AddEtiqueta(etiquetaFin);
-
+            if(Else != null){
             
-        }else{
-        var etiquetaFin = gen.GetEtiqueta();
-        gen.Cbz (R.x0, etiquetaFin);
-        Bloque.Interpretar(gen);
-       
+                var etiquetaFalsa = gen.GetEtiqueta();
+                var etiquetaFin = gen.GetEtiqueta();
+                gen.Cbz (R.x0, etiquetaFalsa);
+                Bloque.Interpretar(gen);
+                gen.B(etiquetaFin);
+                gen.AddEtiqueta(etiquetaFalsa);
+                Else.Interpretar(gen);
 
-        gen.AddEtiqueta(etiquetaFin);
+                gen.AddEtiqueta(etiquetaFin);
+
+                
+            }else{
+                var etiquetaFin = gen.GetEtiqueta();
+                gen.Cbz (R.x0, etiquetaFin);
+                Bloque.Interpretar(gen);
+            
+
+                gen.AddEtiqueta(etiquetaFin);
 
 
+            }
+
+            gen.AddComentario("========== Fin If ===========");
+        } else {
+            Bloque.Interpretar(gen);
+            if(Else != null) Else.Interpretar(gen);
         }
-
-        gen.AddComentario("========== Fin If ===========");
         return null;
 
        }
