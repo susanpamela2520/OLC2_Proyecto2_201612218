@@ -26,10 +26,49 @@ public For (int linea, int columna, Instruccion inicializacion, Expresion condic
 
     }
 
-
     public override TipoRetorno? Interpretar(GenARM gen)
     {
 
+         gen.AddComentario("========== Instruccion For ===========");
+
+        var etiquetaIncio = gen.GetEtiqueta();
+        var etiquetaFin = gen.GetEtiqueta();
+        var etiquetaIncremento = gen.GetEtiqueta();
+        var etiquetaContinueAnterior = gen.EtiquetaContinue;
+        var etiquetaBreakAnterior = gen.EtiquetaBreak;
+
+        gen.EtiquetaContinue = etiquetaIncremento;
+        gen.EtiquetaBreak = etiquetaFin;
+
+        gen.NuevoEntorno();
+        Inicializacion.Interpretar(gen);
+
+        gen.AddEtiqueta(etiquetaIncio);
+
+        Condicion.Interpretar(gen);
+        gen.PopObjeto(R.x0);
+
+        gen.Cbz(R.x0, etiquetaFin);
+
+        Bloque.Interpretar(gen);
+        gen.AddEtiqueta(etiquetaIncremento);
+        Actualizacion.Interpretar(gen);
+
+        gen.B(etiquetaIncio);
+        gen.AddEtiqueta(etiquetaFin);
+
+        var bytesOffset = gen.TerminarEntorno();
+        if(bytesOffset > 0) {
+            gen.AddComentario("---------- Removiendo Bytes de la Pila ----------");
+            gen.Mov(R.x0, bytesOffset);
+            gen.Add(R.sp, R.sp, R.x0);
+            gen.AddComentario("------------ Stack Pointer Ajustado -------------");
+        }
+
+        gen.EtiquetaContinue = etiquetaContinueAnterior;
+        gen.EtiquetaBreak = etiquetaBreakAnterior;
+    
+        gen.AddComentario("========== Fin For ===========");
         return null;
     }
 

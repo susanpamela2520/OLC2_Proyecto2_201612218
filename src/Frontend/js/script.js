@@ -8,20 +8,29 @@ var editor = CodeMirror(document.getElementById("editor"), {
     caseFold: true,
     theme: "VSCode",
     value:`func main() {
+
+    fmt.Println("ciclo for")
 	
     var n int = 4; 
+    for n>0 {
+            if n == 2 {
+            break;
+            
+            }
+           fmt.Println(n)
+    n--
 
-     if n == 3{
-        fmt.Println("es igual", n)
-     }else if n==4{
-     
-       fmt.Println("es igual", n)
-     }else{
-        fmt.Println("no es igual", n)
-     
-     }
+ } 
+    fmt.Println("\\n ciclo for clasico")
+    
+    
+  for i:= 0; i<=5; i++{
+        if i==3  {
+            continue
+        }
+        fmt.Println(i)
 
-  
+    }
 	
 }`
 });

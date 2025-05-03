@@ -16,6 +16,15 @@ public class Continue:Instruccion{
     public override TipoRetorno Interpretar(GenARM gen)
     {
       
+        gen.AddComentario("Sentencia Continue");
+
+        if(gen.EtiquetaContinue != null){
+
+            gen.B(gen.EtiquetaContinue);
+
+        }
+
+
      return null;
     }
 

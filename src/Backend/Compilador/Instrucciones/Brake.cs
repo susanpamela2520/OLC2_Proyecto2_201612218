@@ -15,6 +15,15 @@ public class Break:Instruccion{
 
     public override TipoRetorno Interpretar(GenARM gen)
     {
+
+        gen.AddComentario("Sentencia Break");
+
+        if(gen.EtiquetaBreak != null){
+
+            gen.B(gen.EtiquetaBreak);
+
+        }
+
       return null;
      
     }

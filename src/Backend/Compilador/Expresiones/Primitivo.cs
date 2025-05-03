@@ -56,7 +56,7 @@ public class Primitivo : Expresion {
             case Tipo.RUNE:
                 gen.AddComentario("---------- Rune ----------");
                 objStack = gen.ObjetoRune();
-                gen.Mov(R.x0, (int) Valor.ToString().ToCharArray()[0]);
+                gen.Mov(R.x0, (int) FormatearValor().ToCharArray()[0]);
                 gen.Push(R.x0);
                 gen.PushObjeto(objStack);
                 gen.AddComentario("-------- Fin Rune --------");
@@ -64,7 +64,7 @@ public class Primitivo : Expresion {
             default:
                 gen.AddComentario("--------- Cadena ---------");
                 objStack = gen.ObjetoString();
-                List<byte>vectorString = Utils.StringToByteArray((string)Valor);
+                List<byte>vectorString = Utils.StringToByteArray(FormatearValor());
                 gen.Push(R.x10);
                 for(int i=0; i< vectorString.Count; i++){
                     var codigoChar = vectorString[i];

@@ -7,6 +7,10 @@ public class GenARM {
     private readonly StandardLibrary stdLib = new();
     private List<StackObject> stack = new();
     private int depth = 0;
+    
+    public string? EtiquetaContinue = null;
+    public string? EtiquetaBreak = null;
+    public string? EtiquetaReturn = null;
 
     public GenARM() {
         IniciarPrograma();
@@ -161,7 +165,7 @@ public class GenARM {
     }
 
     public void Div(R rd, R rs1, R rs2) {
-        Instrucciones.Add($"\tdiv {rd}, {rs1}, {rs2}");
+        Instrucciones.Add($"\tsdiv {rd}, {rs1}, {rs2}");
     }
 
     public void Addi(R rd, R rs1, R imm) {

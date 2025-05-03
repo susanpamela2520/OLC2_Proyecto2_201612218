@@ -6,57 +6,11 @@ _start:
 	adr x10, heap
 	// ==== DECLARACION FUNCION ====
 	// ========== Bloque ===========
-	// ========== Declaración: n ===========
-	// --------- Primitivo ---------
-	// --------- Entero ---------
-	mov x0, #4
-	str x0, [sp, #-8]!
-	// ------- Fin Entero -------
-	// ------- Fin Primitivo -------
-	// ========== Fin Declaración ===========
-	// ========== Instruccion If ===========
-	// ----- Relacional (==) -----
-	// ========== Acceso a Variable: n ===========
-	mov x0, #0
-	add x0, sp, x0
-	ldr x0, [x0, #0]
-	str x0, [sp, #-8]!
-	// ========== Fin Acceso Variable: ===========
-	// --------- Primitivo ---------
-	// --------- Entero ---------
-	mov x0, #3
-	str x0, [sp, #-8]!
-	// ------- Fin Entero -------
-	// ------- Fin Primitivo -------
-	ldr x0, [sp], #8
-	ldr x1, [sp], #8
-	cmp x1, x0 
-	beq  L0
-	mov x0, #0
-	str x0, [sp, #-8]!
-	b  L1
-L0:
-	mov x0, #1
-	str x0, [sp, #-8]!
-L1:
-	str x0, [sp, #-8]!
-	// --- Fin Relacionales (==) ---
-	ldr x0, [sp], #8
-	cbz x0, L2 
-	// ========== Bloque ===========
 	// =========== Print ===========
 	// --------- Primitivo ---------
 	// --------- Cadena ---------
 	str x10, [sp, #-8]!
-	mov w0, #101
-	strb w0, [x10]
-	mov x0, #1
-	add x10, x10, x0
-	mov w0, #115
-	strb w0, [x10]
-	mov x0, #1
-	add x10, x10, x0
-	mov w0, #32
+	mov w0, #99
 	strb w0, [x10]
 	mov x0, #1
 	add x10, x10, x0
@@ -64,19 +18,31 @@ L1:
 	strb w0, [x10]
 	mov x0, #1
 	add x10, x10, x0
-	mov w0, #103
-	strb w0, [x10]
-	mov x0, #1
-	add x10, x10, x0
-	mov w0, #117
-	strb w0, [x10]
-	mov x0, #1
-	add x10, x10, x0
-	mov w0, #97
+	mov w0, #99
 	strb w0, [x10]
 	mov x0, #1
 	add x10, x10, x0
 	mov w0, #108
+	strb w0, [x10]
+	mov x0, #1
+	add x10, x10, x0
+	mov w0, #111
+	strb w0, [x10]
+	mov x0, #1
+	add x10, x10, x0
+	mov w0, #32
+	strb w0, [x10]
+	mov x0, #1
+	add x10, x10, x0
+	mov w0, #102
+	strb w0, [x10]
+	mov x0, #1
+	add x10, x10, x0
+	mov w0, #111
+	strb w0, [x10]
+	mov x0, #1
+	add x10, x10, x0
+	mov w0, #114
 	strb w0, [x10]
 	mov x0, #1
 	add x10, x10, x0
@@ -89,21 +55,47 @@ L1:
 	ldr x0, [sp], #8
 	mov x0, x0
 	bl print_string
-	bl print_space
+	bl print_new_line
+	// ========= Fin Print =========
+	// ========== Declaración: n ===========
+	// --------- Primitivo ---------
+	// --------- Entero ---------
+	mov x0, #4
+	str x0, [sp, #-8]!
+	// ------- Fin Entero -------
+	// ------- Fin Primitivo -------
+	// ========== Fin Declaración ===========
+	// ========== Instruccion While ===========
+L0:
+	// ----- Relacional (>) -----
 	// ========== Acceso a Variable: n ===========
-	mov x0, #8
+	mov x0, #0
 	add x0, sp, x0
 	ldr x0, [x0, #0]
 	str x0, [sp, #-8]!
 	// ========== Fin Acceso Variable: ===========
+	// --------- Primitivo ---------
+	// --------- Entero ---------
+	mov x0, #0
+	str x0, [sp, #-8]!
+	// ------- Fin Entero -------
+	// ------- Fin Primitivo -------
 	ldr x0, [sp], #8
-	mov x0, x0
-	bl print_integer
-	bl print_new_line
-	// ========= Fin Print =========
-	// ======== Fin Bloque =========
+	ldr x1, [sp], #8
+	cmp x1, x0 
+	bgt  L2
+	mov x0, #0
+	str x0, [sp, #-8]!
 	b  L3
 L2:
+	mov x0, #1
+	str x0, [sp, #-8]!
+L3:
+	str x0, [sp, #-8]!
+	// --- Fin Relacionales (>) ---
+	ldr x0, [sp], #8
+	cbz x0, L1 
+	// ========== Bloque ===========
 	// ========== Instruccion If ===========
 	// ----- Relacional (==) -----
 	// ========== Acceso a Variable: n ===========
@@ -114,7 +106,7 @@ L2:
 	// ========== Fin Acceso Variable: ===========
 	// --------- Primitivo ---------
 	// --------- Entero ---------
-	mov x0, #4
+	mov x0, #2
 	str x0, [sp, #-8]!
 	// ------- Fin Entero -------
 	// ------- Fin Primitivo -------
@@ -134,52 +126,12 @@ L5:
 	ldr x0, [sp], #8
 	cbz x0, L6 
 	// ========== Bloque ===========
+	// Sentencia Break
+	b  L1
+	// ======== Fin Bloque =========
+L6:
+	// ========== Fin If ===========
 	// =========== Print ===========
-	// --------- Primitivo ---------
-	// --------- Cadena ---------
-	str x10, [sp, #-8]!
-	mov w0, #101
-	strb w0, [x10]
-	mov x0, #1
-	add x10, x10, x0
-	mov w0, #115
-	strb w0, [x10]
-	mov x0, #1
-	add x10, x10, x0
-	mov w0, #32
-	strb w0, [x10]
-	mov x0, #1
-	add x10, x10, x0
-	mov w0, #105
-	strb w0, [x10]
-	mov x0, #1
-	add x10, x10, x0
-	mov w0, #103
-	strb w0, [x10]
-	mov x0, #1
-	add x10, x10, x0
-	mov w0, #117
-	strb w0, [x10]
-	mov x0, #1
-	add x10, x10, x0
-	mov w0, #97
-	strb w0, [x10]
-	mov x0, #1
-	add x10, x10, x0
-	mov w0, #108
-	strb w0, [x10]
-	mov x0, #1
-	add x10, x10, x0
-	mov w0, #0
-	strb w0, [x10]
-	mov x0, #1
-	add x10, x10, x0
-	// ------- Fin Cadena -------
-	// ------- Fin Primitivo -------
-	ldr x0, [sp], #8
-	mov x0, x0
-	bl print_string
-	bl print_space
 	// ========== Acceso a Variable: n ===========
 	mov x0, #16
 	add x0, sp, x0
@@ -191,15 +143,60 @@ L5:
 	bl print_integer
 	bl print_new_line
 	// ========= Fin Print =========
+	// ========== Asignacion Variable: n ===========
+	// ----- Aritmetica (-) -----
+	// ========== Acceso a Variable: n ===========
+	mov x0, #16
+	add x0, sp, x0
+	ldr x0, [x0, #0]
+	str x0, [sp, #-8]!
+	// ========== Fin Acceso Variable: ===========
+	// --------- Primitivo ---------
+	// --------- Entero ---------
+	mov x0, #1
+	str x0, [sp, #-8]!
+	// ------- Fin Entero -------
+	// ------- Fin Primitivo -------
+	ldr x0, [sp], #8
+	ldr x1, [sp], #8
+	sub x0, x1, x0
+	str x0, [sp, #-8]!
+	// --- Fin Aritmetica (-) ---
+	ldr x0, [sp], #8
+	mov x1, #16
+	add x1, sp, x1
+	str x0, [x1, #0]
+	str x0, [sp, #-8]!
+	// ========== Fin Asignacion Variable: n ===========
 	// ======== Fin Bloque =========
-	b  L7
-L6:
-	// ========== Bloque ===========
+	b  L0
+L1:
+	// ========== Fin While ===========
 	// =========== Print ===========
 	// --------- Primitivo ---------
 	// --------- Cadena ---------
 	str x10, [sp, #-8]!
-	mov w0, #110
+	mov w0, #10
+	strb w0, [x10]
+	mov x0, #1
+	add x10, x10, x0
+	mov w0, #32
+	strb w0, [x10]
+	mov x0, #1
+	add x10, x10, x0
+	mov w0, #99
+	strb w0, [x10]
+	mov x0, #1
+	add x10, x10, x0
+	mov w0, #105
+	strb w0, [x10]
+	mov x0, #1
+	add x10, x10, x0
+	mov w0, #99
+	strb w0, [x10]
+	mov x0, #1
+	add x10, x10, x0
+	mov w0, #108
 	strb w0, [x10]
 	mov x0, #1
 	add x10, x10, x0
@@ -211,11 +208,15 @@ L6:
 	strb w0, [x10]
 	mov x0, #1
 	add x10, x10, x0
-	mov w0, #101
+	mov w0, #102
 	strb w0, [x10]
 	mov x0, #1
 	add x10, x10, x0
-	mov w0, #115
+	mov w0, #111
+	strb w0, [x10]
+	mov x0, #1
+	add x10, x10, x0
+	mov w0, #114
 	strb w0, [x10]
 	mov x0, #1
 	add x10, x10, x0
@@ -223,15 +224,11 @@ L6:
 	strb w0, [x10]
 	mov x0, #1
 	add x10, x10, x0
-	mov w0, #105
+	mov w0, #99
 	strb w0, [x10]
 	mov x0, #1
 	add x10, x10, x0
-	mov w0, #103
-	strb w0, [x10]
-	mov x0, #1
-	add x10, x10, x0
-	mov w0, #117
+	mov w0, #108
 	strb w0, [x10]
 	mov x0, #1
 	add x10, x10, x0
@@ -239,7 +236,19 @@ L6:
 	strb w0, [x10]
 	mov x0, #1
 	add x10, x10, x0
-	mov w0, #108
+	mov w0, #115
+	strb w0, [x10]
+	mov x0, #1
+	add x10, x10, x0
+	mov w0, #105
+	strb w0, [x10]
+	mov x0, #1
+	add x10, x10, x0
+	mov w0, #99
+	strb w0, [x10]
+	mov x0, #1
+	add x10, x10, x0
+	mov w0, #111
 	strb w0, [x10]
 	mov x0, #1
 	add x10, x10, x0
@@ -252,8 +261,84 @@ L6:
 	ldr x0, [sp], #8
 	mov x0, x0
 	bl print_string
-	bl print_space
-	// ========== Acceso a Variable: n ===========
+	bl print_new_line
+	// ========= Fin Print =========
+	// ========== Instruccion For ===========
+	// ========== Declaración: i ===========
+	// --------- Primitivo ---------
+	// --------- Entero ---------
+	mov x0, #0
+	str x0, [sp, #-8]!
+	// ------- Fin Entero -------
+	// ------- Fin Primitivo -------
+	// ========== Fin Declaración ===========
+L7:
+	// ----- Relacional (<=) -----
+	// ========== Acceso a Variable: i ===========
+	mov x0, #0
+	add x0, sp, x0
+	ldr x0, [x0, #0]
+	str x0, [sp, #-8]!
+	// ========== Fin Acceso Variable: ===========
+	// --------- Primitivo ---------
+	// --------- Entero ---------
+	mov x0, #5
+	str x0, [sp, #-8]!
+	// ------- Fin Entero -------
+	// ------- Fin Primitivo -------
+	ldr x0, [sp], #8
+	ldr x1, [sp], #8
+	cmp x1, x0 
+	ble  L10
+	mov x0, #0
+	str x0, [sp, #-8]!
+	b  L11
+L10:
+	mov x0, #1
+	str x0, [sp, #-8]!
+L11:
+	str x0, [sp, #-8]!
+	// --- Fin Relacionales (<=) ---
+	ldr x0, [sp], #8
+	cbz x0, L8 
+	// ========== Bloque ===========
+	// ========== Instruccion If ===========
+	// ----- Relacional (==) -----
+	// ========== Acceso a Variable: i ===========
+	mov x0, #8
+	add x0, sp, x0
+	ldr x0, [x0, #0]
+	str x0, [sp, #-8]!
+	// ========== Fin Acceso Variable: ===========
+	// --------- Primitivo ---------
+	// --------- Entero ---------
+	mov x0, #3
+	str x0, [sp, #-8]!
+	// ------- Fin Entero -------
+	// ------- Fin Primitivo -------
+	ldr x0, [sp], #8
+	ldr x1, [sp], #8
+	cmp x1, x0 
+	beq  L12
+	mov x0, #0
+	str x0, [sp, #-8]!
+	b  L13
+L12:
+	mov x0, #1
+	str x0, [sp, #-8]!
+L13:
+	str x0, [sp, #-8]!
+	// --- Fin Relacionales (==) ---
+	ldr x0, [sp], #8
+	cbz x0, L14 
+	// ========== Bloque ===========
+	// Sentencia Continue
+	b  L9
+	// ======== Fin Bloque =========
+L14:
+	// ========== Fin If ===========
+	// =========== Print ===========
+	// ========== Acceso a Variable: i ===========
 	mov x0, #16
 	add x0, sp, x0
 	ldr x0, [x0, #0]
@@ -264,13 +349,46 @@ L6:
 	bl print_integer
 	bl print_new_line
 	// ========= Fin Print =========
+	// ---------- Removiendo Bytes de la Pila ----------
+	mov x0, #8
+	add sp, sp, x0
+	// ------------ Stack Pointer Ajustado -------------
 	// ======== Fin Bloque =========
-L7:
-	// ========== Fin If ===========
-L3:
-	// ========== Fin If ===========
+L9:
+	// ========== Asignacion Variable: i ===========
+	// ----- Aritmetica (+) -----
+	// ========== Acceso a Variable: i ===========
+	mov x0, #8
+	add x0, sp, x0
+	ldr x0, [x0, #0]
+	str x0, [sp, #-8]!
+	// ========== Fin Acceso Variable: ===========
+	// --------- Primitivo ---------
+	// --------- Entero ---------
+	mov x0, #1
+	str x0, [sp, #-8]!
+	// ------- Fin Entero -------
+	// ------- Fin Primitivo -------
+	ldr x0, [sp], #8
+	ldr x1, [sp], #8
+	add x0, x0, x1
+	str x0, [sp, #-8]!
+	// --- Fin Aritmetica (+) ---
+	ldr x0, [sp], #8
+	mov x1, #8
+	add x1, sp, x1
+	str x0, [x1, #0]
+	str x0, [sp, #-8]!
+	// ========== Fin Asignacion Variable: i ===========
+	b  L7
+L8:
 	// ---------- Removiendo Bytes de la Pila ----------
 	mov x0, #24
+	add sp, sp, x0
+	// ------------ Stack Pointer Ajustado -------------
+	// ========== Fin For ===========
+	// ---------- Removiendo Bytes de la Pila ----------
+	mov x0, #8
 	add sp, sp, x0
 	// ------------ Stack Pointer Ajustado -------------
 	// ======== Fin Bloque =========
@@ -325,12 +443,12 @@ print_done:
 
 
 //--------------------------------------------------------------
-// print_space - Prints a space
+// print_new_line - Prints a new line
 //--------------------------------------------------------------
-print_space:
-    // Print space
+print_new_line:
+    // Print new line
     mov x0, #1
-    adr x1, espacio
+    adr x1, new_line
     mov x2, #1
     mov x8, #64
     svc #0
@@ -435,19 +553,5 @@ print_result:
     ldp x29, x30, [sp], #16    // Restore frame pointer and link register
     ret                        // Return to caller
 
-
-//--------------------------------------------------------------
-// print_new_line - Prints a new line
-//--------------------------------------------------------------
-print_new_line:
-    // Print new line
-    mov x0, #1
-    adr x1, new_line
-    mov x2, #1
-    mov x8, #64
-    svc #0
-    ret
-
 new_line: .ascii "\n"
-espacio: .ascii " "
 minus_sign: .ascii "-"
