@@ -22,7 +22,6 @@ public class StandardLibrary {
             UsedSymbols.Add("false_value");
         }
         UsedSymbols.Add("new_line");
-       
     }
 
     public string GetFunctionDefinitions() {
@@ -354,15 +353,74 @@ exit_print_bool:
 //--------------------------------------------------------------
 print_rune:
     // Print rune
-    sub     sp, sp, #8         // Reservar espacio en el stack
-    strb    w0, [sp]           // Escribir solo un byte en el stack
+    str     w0, [sp, #-8]!           // Escribir solo un byte en el stack
     mov     x0, #1             // stdout
     mov     x1, sp             // dirección del byte
     mov     x2, #1             // longitud
     mov     x8, #64            // syscall write
     svc     #0
-    add     sp, sp, #8         // Restaurar el stack
+    ldr     w0, [sp], #8         // Restaurar el stack
     ret
+"
+        },
+        {
+            "equal_string", @"
+//--------------------------------------------------------------
+// equal_string - String compair
+//--------------------------------------------------------------
+equal_string:
+loop_c_string:
+    ldrsb x9, [x1]           // x9 = byte con signo desde [x1] (t1)
+    ldrsb x10, [x0]          // x10 = byte con signo desde [x0] (t0)
+    cmp x9, x10              // Comparar x9 con x10
+    bne label_false_c_string // Si son distintos, salta a falso
+    cmp x9, #0               // Comparar x9 con 0
+    beq label_true_c_string  // Si es cero, salta a verdadero
+    add x1, x1, #1           // a1 += 1
+    add x0, x0, #1           // a0 += 1
+    b loop_c_string          // Saltar al inicio del ciclo
+
+label_true_c_string:
+    mov x10, #1              // t0 = 1
+    str x10, [sp, #-8]!      // Guardar t0 en la pila
+    b end_c_string           // Saltar al final
+
+label_false_c_string:
+    mov x10, #0              // t0 = 0
+    str x10, [sp, #-8]!      // Guardar t0 en la pila
+
+end_c_string:
+    ret                      // Retornar
+"
+        },
+        {
+            "not_equal_string", @"
+//--------------------------------------------------------------
+// not_equal_string - String compair
+//--------------------------------------------------------------
+not_equal_string:
+loop_not_c_string:
+    ldrsb x9, [x1]           // x9 = byte con signo desde [x1] (t1)
+    ldrsb x10, [x0]          // x10 = byte con signo desde [x0] (t0)
+    cmp x9, x10              // Comparar x9 con x10
+    bne label_false_not_c_string // Si son distintos, salta a falso
+    cmp x9, #0               // Comparar x9 con 0
+    beq label_true_not_c_string  // Si es cero, salta a verdadero
+    add x1, x1, #1           // a1 += 1
+    add x0, x0, #1           // a0 += 1
+    b loop_not_c_string          // Saltar al inicio del ciclo
+
+label_true_not_c_string:
+    mov x10, #0              // t0 = 0
+    str x10, [sp, #-8]!      // Guardar t0 en la pila
+    b end_not_c_string       // Saltar al final
+
+label_false_not_c_string:
+    mov x10, #1              // t0 = 1
+    str x10, [sp, #-8]!      // Guardar t0 en la pila
+
+end_not_c_string:
+    ret                      // Retornar
 "
         }
     };

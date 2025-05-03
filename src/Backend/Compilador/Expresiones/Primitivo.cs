@@ -61,10 +61,10 @@ public class Primitivo : Expresion {
                 gen.PushObjeto(objStack);
                 gen.AddComentario("-------- Fin Rune --------");
                 break;
-            default:
+            case Tipo.STRING:
                 gen.AddComentario("--------- Cadena ---------");
                 objStack = gen.ObjetoString();
-                List<byte>vectorString = Utils.StringToByteArray(FormatearValor());
+                List<byte> vectorString = Utils.StringToByteArray(FormatearValor());
                 gen.Push(R.x10);
                 for(int i=0; i< vectorString.Count; i++){
                     var codigoChar = vectorString[i];
@@ -75,6 +75,21 @@ public class Primitivo : Expresion {
                 }
                 gen.PushObjeto(objStack);
                 gen.AddComentario("------- Fin Cadena -------");
+                break;
+            default:
+                gen.AddComentario("--------- nil ---------");
+                objStack = gen.ObjetoString();
+                List<byte> vectorStringNil = Utils.StringToByteArray("nil");
+                gen.Push(R.x10);
+                for(int i=0; i< vectorStringNil.Count; i++){
+                    var codigoChar = vectorStringNil[i];
+                    gen.Mov(R.w0, codigoChar);
+                    gen.Strb(R.w0, R.x10);
+                    gen.Mov(R.x0, 1);
+                    gen.Add(R.x10, R.x10, R.x0);
+                }
+                gen.PushObjeto(objStack);
+                gen.AddComentario("------- Fin nil -------");
                 break;
         };
         

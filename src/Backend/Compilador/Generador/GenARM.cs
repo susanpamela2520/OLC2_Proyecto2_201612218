@@ -201,18 +201,36 @@ public class GenARM {
         Instrucciones.Add($"\taddi {rd}, {rs1}, #{imm}");
     }
 
-        //comparacion
+    //comparacion
     public void Cmp(R rs1, R rs2) {
         Instrucciones.Add($"\tcmp {rs1}, {rs2} ");
+    }
+
+    public void Cmp(R rs1, int imm) {
+        Instrucciones.Add($"\tcmp {rs1}, #{imm} ");
+    }
+
+    public void CmpString() {
+        stdLib.Use("equal_string");
+        Instrucciones.Add("\tbl equal_string");
+    }
+
+    public void CmpStringNot() {
+        stdLib.Use("not_equal_string");
+        Instrucciones.Add("\tbl not_equal_string");
+    }
+
+    public void Fcmp(R rs1, R rs2) {
+        Instrucciones.Add($"\tfcmp {rs1}, {rs2} ");
     }
     
     public void Cbz(R rs, string etiqueta) {
         Instrucciones.Add($"\tcbz {rs}, {etiqueta} ");
     }
-    //saltos
 
+    //saltos
     public void Beq(string etiqueta){
-        Instrucciones.Add($"\tbeq  {etiqueta}");
+        Instrucciones.Add($"\tbeq {etiqueta}");
     }
 
     public void Bne(string etiqueta){
@@ -266,7 +284,7 @@ public class GenARM {
     }
 
     public void Scvtf (R rd, R rs){
-         Instrucciones.Add($"\tscvtf {rd}, {rs}");
+        Instrucciones.Add($"\tscvtf {rd}, {rs}");
     }
 
 
@@ -349,7 +367,7 @@ public class GenARM {
     // Estructura del Programa
     public void IniciarPrograma() {
         Instrucciones.Add(".data");
-        Instrucciones.Add("heap: .space 4096");
+        Instrucciones.Add("heap: .space 8192");
         Instrucciones.Add(".text");
         Instrucciones.Add(".global _start");
         Instrucciones.Add("_start:");
