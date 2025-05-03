@@ -1,12 +1,20 @@
+using Antlr4.Runtime;
 using Microsoft.AspNetCore.Mvc;
 using OLC2_Proyecto2_201612218.src.Backend.controlador;
 using OLC2_Proyecto2_201612218.src.Backend.parser;
-using Antlr4.Runtime;
+using OLC2_Proyecto2_201612218.src.Backend.Compilador.Instrucciones;
+using OLC2_Proyecto2_201612218.src.Backend.Compilador.Abstracts;
+using OLC2_Proyecto2_201612218.src.Backend.Compilador.Utils;
+using OLC2_Proyecto2_201612218.src.Backend.Compilador.Generador;
 using OLC2_Proyecto2_201612218.src.Backend.Interprete.Entorno1;
-using OLC2_Proyecto2_201612218.src.Backend.Interprete.Instrucciones;
-using OLC2_Proyecto2_201612218.src.Backend.Interprete.Abstracts;
-using OLC2_Proyecto2_201612218.src.Backend.Interprete.Utils;
-using OLC2_Proyecto2_201612218.src.Backend.Interprete.Generador;
+using FuncionInterprete = OLC2_Proyecto2_201612218.src.Backend.Interprete.Instrucciones.Funcion;
+using InstruccionInterprete = OLC2_Proyecto2_201612218.src.Backend.Interprete.Abstracts.Instruccion;
+using TipoIInterprete = OLC2_Proyecto2_201612218.src.Backend.Interprete.Utils.TipoI;
+using ConsolaInterprete = OLC2_Proyecto2_201612218.src.Backend.Interprete.Utils.Consola;
+using ParserLexerInterprete = OLC2_Proyecto2_201612218.src.Backend.parser_Interprete.ParserLexer;
+using ParserParserInterprete = OLC2_Proyecto2_201612218.src.Backend.parser_Interprete.ParserParser;
+using LexerErrorListenerInterprete = OLC2_Proyecto2_201612218.src.Backend.parser_Interprete.LexerErrorListener;
+using SyntaxErrorListenerInterprete = OLC2_Proyecto2_201612218.src.Backend.parser_Interprete.SyntaxErrorListener;
 
 
 var builder = WebApplication.CreateBuilder(args);  //se cera laapi
@@ -42,83 +50,64 @@ app.MapPost("/parse", async ([FromBody]Request req) => {
         Consola.Limpiar();
         try {
             AntlrInputStream inputStream = new(req.Input);
-            ParserLexer lexer = new(inputStream);
-            lexer.AddErrorListener(new LexerErrorListener());
+            ParserLexerInterprete lexer = new(inputStream);
+            lexer.AddErrorListener(new LexerErrorListenerInterprete());
             CommonTokenStream cts = new(lexer);
-            ParserParser parser = new(cts);
-            parser.AddErrorListener(new SyntaxErrorListener());
-            ParserParser.InicioContext res = parser.inicio();
+            ParserParserInterprete parser = new(cts);
+            parser.AddErrorListener(new SyntaxErrorListenerInterprete());
+            ParserParserInterprete.InicioContext res = parser.inicio();
             ast = controlador.DotTree(res, parser.RuleNames);
 
             //cracion de entorno global
             Entorno global = new (null, "Global");
 
-            //Generador de ARM
-            GenARM gen = new ();
-            
             //Funcion donde se alamcenara la funcion main
             
-            Funcion? main = null;
+            FuncionInterprete? main = null;
 
-            foreach(Instruccion instruccion in res.resultado){
-                if(instruccion.Tipoi == TipoI.FUNCION){
-                        if(((Funcion) instruccion).Nombre == "main"){
-                            main = (Funcion) instruccion;
+            foreach(InstruccionInterprete instruccion in res.resultado){
+                if(instruccion.Tipoi == TipoIInterprete.FUNCION){
+                        if(((FuncionInterprete) instruccion).Nombre == "main"){
+                            main = (FuncionInterprete) instruccion;
                         }else{
-                            instruccion.Interpretar(global, gen);
-                       }
+                            instruccion.Interpretar(global);
+                        }
                 }else{
-                    instruccion.Interpretar(global, gen);
+                    instruccion.Interpretar(global);
                 }
-
             }
 
             if(main != null){
-                main.Interpretar(global, gen);
+                main.Interpretar(global);
             }
 
-        gen.generarCodigo();
-        string salidas = !Consola.Salidas().Equals("") ? Consola.Salidas() : gen.getCodigo();
-
-
-        //genera el codigo de una vez en ensamblador 
-        StreamWriter sw = new StreamWriter("./Outs/program.s");
-                sw.Write(gen.getCodigo());
-                sw.Close();
-
-        return Results.Ok(new { status = 200, salida = salidas});
-
-        }
-
-        catch(Exception e){
-            Console.Error.WriteLine(e);
-            return Results.Ok(new { status = 500, salida = e.ToString() });
-        }
-
-        
-    });
-
-app.MapPost("/test", async ([FromBody]Request req) => {
-    await Task.Delay(100);
-        
-        
-        try {
-
-            string contenido = "";
-            using (StreamReader sr = new (req.Input??""))
-            {
-                contenido = sr.ReadToEnd();
+            if(!ConsolaInterprete.Salidas().Equals("")) {
+                return Results.Ok(new { status = 200, salida = ConsolaInterprete.Salidas()});
             }
 
-            AntlrInputStream inputStream = new(contenido);
-            ParserLexer lexer = new(inputStream);
-            lexer.AddErrorListener(new LexerErrorListener());
-            CommonTokenStream cts = new(lexer);
-            ParserParser parser = new(cts);
-            parser.AddErrorListener(new SyntaxErrorListener());
-            ParserParser.InicioContext res = parser.inicio();
-            Console.WriteLine(controlador.DotTree(res, parser.RuleNames));
-            return Results.Ok(new { status = 200, salida = "" });
+            inputStream = new(req.Input);
+            ParserLexer lexerC = new(inputStream);
+            lexerC.AddErrorListener(new LexerErrorListener());
+            cts = new(lexerC);
+            ParserParser parserC = new(cts);
+            parserC.AddErrorListener(new SyntaxErrorListener());
+            ParserParser.InicioContext resC = parserC.inicio();
+
+            //Generador de ARM
+            GenARM gen = new ();
+
+            foreach(Instruccion instruccion in resC.resultado){
+                instruccion.Interpretar(gen);
+            }
+
+            gen.generarCodigo();
+
+            //genera el codigo de una vez en ensamblador 
+            StreamWriter sw = new StreamWriter("./Out/program.s");
+            sw.Write(gen.getCodigo());
+            sw.Close();
+
+            return Results.Ok(new { status = 200, salida = gen.getCodigo()});
 
         }
 

@@ -1,0 +1,5 @@
+namespace OLC2_Proyecto2_201612218.src.Backend.Compilador.Utils;
+
+public enum TipoE{
+   PRIMITIVO, LLAMADAFUNC, RETORNO, ACCESOVAR, ARITMETICO, RELACIONAL, LOGICO, EMBEBIDAS, VECTOR
+}

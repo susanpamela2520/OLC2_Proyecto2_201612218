@@ -2,7 +2,6 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using OLC2_Proyecto2_201612218.src.Backend.Interprete.Abstracts;
 using OLC2_Proyecto2_201612218.src.Backend.Interprete.Entorno1;
 using OLC2_Proyecto2_201612218.src.Backend.Interprete.Expresiones;
-using OLC2_Proyecto2_201612218.src.Backend.Interprete.Generador;
 using OLC2_Proyecto2_201612218.src.Backend.Interprete.Utils;
 
 namespace OLC2_Proyecto2_201612218.src.Backend.Interprete.Instrucciones;
@@ -32,10 +31,32 @@ Indices = indices;
 
 }
 
-    public override TipoRetorno? Interpretar(Entorno e, GenARM gen)
+    public override TipoRetorno? Interpretar(Entorno e)
     {
       
-       return null;
+        TipoRetorno valor = Valor.Interpretar(e);
+        if(Indices == null ){
+             e.ActualizarVariable(Variable,valor, Linea, Columna);
+        }else{
+
+            List <int []> indices = new ();
+
+            TipoRetorno indice;
+            foreach(Expresion i in Indices){
+                indice = i.Interpretar(e);
+                if(indice.Tipobase != Tipo.INT){
+
+                    e.GuardarError ($"Los indices solo pueden ser de tipo Int ", i.Linea, i.Columna);
+                    return new TipoRetorno("nil", Tipo.NIL);
+                }
+
+                    indices.Add(new []{int.Parse(indice.Valor.ToString()), i.Linea, i.Columna});
+            }
+             e.ActualizarVariable(Variable, indices, valor, Linea, Columna);
+
+        }
+       
+        return null;
 
     }
 

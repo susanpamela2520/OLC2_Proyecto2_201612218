@@ -21,12 +21,11 @@
 
 
     namespace OLC2_Proyecto2_201612218.src.Backend.parser;
-     using OLC2_Proyecto2_201612218.src.Backend.Interprete.Utils;
-     using OLC2_Proyecto2_201612218.src.Backend.Interprete.Abstracts;
-     using OLC2_Proyecto2_201612218.src.Backend.Interprete.Expresiones;
-     using OLC2_Proyecto2_201612218.src.Backend.Interprete.Instrucciones;
-     using MiSwitch = OLC2_Proyecto2_201612218.src.Backend.Interprete.Instrucciones.Switch;
-     
+    using OLC2_Proyecto2_201612218.src.Backend.Compilador.Utils;
+    using OLC2_Proyecto2_201612218.src.Backend.Compilador.Abstracts;
+    using OLC2_Proyecto2_201612218.src.Backend.Compilador.Expresiones;
+    using OLC2_Proyecto2_201612218.src.Backend.Compilador.Instrucciones;
+    using MiSwitch = OLC2_Proyecto2_201612218.src.Backend.Compilador.Instrucciones.Switch;
 
 using System;
 using System.IO;
@@ -137,16 +136,6 @@ public partial class ParserParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_inicio; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IParserListener typedListener = listener as IParserListener;
-			if (typedListener != null) typedListener.EnterInicio(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IParserListener typedListener = listener as IParserListener;
-			if (typedListener != null) typedListener.ExitInicio(this);
-		}
 	}
 
 	[RuleVersion(0)]
@@ -201,16 +190,6 @@ public partial class ParserParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_instruccionglobal; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IParserListener typedListener = listener as IParserListener;
-			if (typedListener != null) typedListener.EnterInstruccionglobal(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IParserListener typedListener = listener as IParserListener;
-			if (typedListener != null) typedListener.ExitInstruccionglobal(this);
-		}
 	}
 
 	[RuleVersion(0)]
@@ -264,16 +243,6 @@ public partial class ParserParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_funcionMain; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IParserListener typedListener = listener as IParserListener;
-			if (typedListener != null) typedListener.EnterFuncionMain(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IParserListener typedListener = listener as IParserListener;
-			if (typedListener != null) typedListener.ExitFuncionMain(this);
-		}
 	}
 
 	[RuleVersion(0)]
@@ -333,16 +302,6 @@ public partial class ParserParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_funcion; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IParserListener typedListener = listener as IParserListener;
-			if (typedListener != null) typedListener.EnterFuncion(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IParserListener typedListener = listener as IParserListener;
-			if (typedListener != null) typedListener.ExitFuncion(this);
-		}
 	}
 
 	[RuleVersion(0)]
@@ -412,16 +371,6 @@ public partial class ParserParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_parametros; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IParserListener typedListener = listener as IParserListener;
-			if (typedListener != null) typedListener.EnterParametros(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IParserListener typedListener = listener as IParserListener;
-			if (typedListener != null) typedListener.ExitParametros(this);
-		}
 	}
 
 	[RuleVersion(0)]
@@ -497,16 +446,6 @@ public partial class ParserParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_bloque; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IParserListener typedListener = listener as IParserListener;
-			if (typedListener != null) typedListener.EnterBloque(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IParserListener typedListener = listener as IParserListener;
-			if (typedListener != null) typedListener.ExitBloque(this);
-		}
 	}
 
 	[RuleVersion(0)]
@@ -596,16 +535,6 @@ public partial class ParserParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_instruccion; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IParserListener typedListener = listener as IParserListener;
-			if (typedListener != null) typedListener.EnterInstruccion(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IParserListener typedListener = listener as IParserListener;
-			if (typedListener != null) typedListener.ExitInstruccion(this);
-		}
 	}
 
 	[RuleVersion(0)]
@@ -811,16 +740,6 @@ public partial class ParserParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_declaracion; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IParserListener typedListener = listener as IParserListener;
-			if (typedListener != null) typedListener.EnterDeclaracion(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IParserListener typedListener = listener as IParserListener;
-			if (typedListener != null) typedListener.ExitDeclaracion(this);
-		}
 	}
 
 	[RuleVersion(0)]
@@ -916,16 +835,6 @@ public partial class ParserParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_reasignacion; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IParserListener typedListener = listener as IParserListener;
-			if (typedListener != null) typedListener.EnterReasignacion(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IParserListener typedListener = listener as IParserListener;
-			if (typedListener != null) typedListener.ExitReasignacion(this);
-		}
 	}
 
 	[RuleVersion(0)]
@@ -1063,16 +972,6 @@ public partial class ParserParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_estructuraIf; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IParserListener typedListener = listener as IParserListener;
-			if (typedListener != null) typedListener.EnterEstructuraIf(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IParserListener typedListener = listener as IParserListener;
-			if (typedListener != null) typedListener.ExitEstructuraIf(this);
-		}
 	}
 
 	[RuleVersion(0)]
@@ -1173,16 +1072,6 @@ public partial class ParserParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_estructuraFor; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IParserListener typedListener = listener as IParserListener;
-			if (typedListener != null) typedListener.EnterEstructuraFor(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IParserListener typedListener = listener as IParserListener;
-			if (typedListener != null) typedListener.ExitEstructuraFor(this);
-		}
 	}
 
 	[RuleVersion(0)]
@@ -1292,16 +1181,6 @@ public partial class ParserParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_estructuraSwitch; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IParserListener typedListener = listener as IParserListener;
-			if (typedListener != null) typedListener.EnterEstructuraSwitch(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IParserListener typedListener = listener as IParserListener;
-			if (typedListener != null) typedListener.ExitEstructuraSwitch(this);
-		}
 	}
 
 	[RuleVersion(0)]
@@ -1365,16 +1244,6 @@ public partial class ParserParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_casos; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IParserListener typedListener = listener as IParserListener;
-			if (typedListener != null) typedListener.EnterCasos(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IParserListener typedListener = listener as IParserListener;
-			if (typedListener != null) typedListener.ExitCasos(this);
-		}
 	}
 
 	[RuleVersion(0)]
@@ -1479,16 +1348,6 @@ public partial class ParserParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_println; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IParserListener typedListener = listener as IParserListener;
-			if (typedListener != null) typedListener.EnterPrintln(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IParserListener typedListener = listener as IParserListener;
-			if (typedListener != null) typedListener.ExitPrintln(this);
-		}
 	}
 
 	[RuleVersion(0)]
@@ -1559,16 +1418,6 @@ public partial class ParserParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_tipoDato; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IParserListener typedListener = listener as IParserListener;
-			if (typedListener != null) typedListener.EnterTipoDato(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IParserListener typedListener = listener as IParserListener;
-			if (typedListener != null) typedListener.ExitTipoDato(this);
-		}
 	}
 
 	[RuleVersion(0)]
@@ -1630,16 +1479,6 @@ public partial class ParserParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_tipo; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IParserListener typedListener = listener as IParserListener;
-			if (typedListener != null) typedListener.EnterTipo(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IParserListener typedListener = listener as IParserListener;
-			if (typedListener != null) typedListener.ExitTipo(this);
-		}
 	}
 
 	[RuleVersion(0)]
@@ -1749,16 +1588,6 @@ public partial class ParserParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_exp; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IParserListener typedListener = listener as IParserListener;
-			if (typedListener != null) typedListener.EnterExp(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IParserListener typedListener = listener as IParserListener;
-			if (typedListener != null) typedListener.ExitExp(this);
-		}
 	}
 
 	[RuleVersion(0)]
@@ -2203,16 +2032,6 @@ public partial class ParserParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_slice; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IParserListener typedListener = listener as IParserListener;
-			if (typedListener != null) typedListener.EnterSlice(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IParserListener typedListener = listener as IParserListener;
-			if (typedListener != null) typedListener.ExitSlice(this);
-		}
 	}
 
 	[RuleVersion(0)]
@@ -2286,16 +2105,6 @@ public partial class ParserParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_llamadafunc; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IParserListener typedListener = listener as IParserListener;
-			if (typedListener != null) typedListener.EnterLlamadafunc(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IParserListener typedListener = listener as IParserListener;
-			if (typedListener != null) typedListener.ExitLlamadafunc(this);
-		}
 	}
 
 	[RuleVersion(0)]

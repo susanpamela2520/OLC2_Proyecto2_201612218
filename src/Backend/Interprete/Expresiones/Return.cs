@@ -1,6 +1,5 @@
 using OLC2_Proyecto2_201612218.src.Backend.Interprete.Abstracts;
 using OLC2_Proyecto2_201612218.src.Backend.Interprete.Entorno1;
-using OLC2_Proyecto2_201612218.src.Backend.Interprete.Generador;
 using OLC2_Proyecto2_201612218.src.Backend.Interprete.Instrucciones;
 using OLC2_Proyecto2_201612218.src.Backend.Interprete.Utils;
 
@@ -18,9 +17,12 @@ public class Return:Expresion{
 
     }
 
-    public override TipoRetorno Interpretar(Entorno e, GenARM gen)
+    public override TipoRetorno Interpretar(Entorno e)
     {
-      
-        return null;
-}
+       if(Expresion != null){
+            return Expresion.Interpretar(e);
+       }
+       return new TipoRetorno(tipoE, Tipo.NIL);
+    }
+
 }

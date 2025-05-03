@@ -1,6 +1,5 @@
 using OLC2_Proyecto2_201612218.src.Backend.Interprete.Abstracts;
 using OLC2_Proyecto2_201612218.src.Backend.Interprete.Entorno1;
-using OLC2_Proyecto2_201612218.src.Backend.Interprete.Generador;
 using OLC2_Proyecto2_201612218.src.Backend.Interprete.Instrucciones;
 using OLC2_Proyecto2_201612218.src.Backend.Interprete.Utils;
 
@@ -18,18 +17,32 @@ public Slice(int linea, int columna, List<Expresion> elementos):
 
     }
 
-    public override TipoRetorno Interpretar(Entorno e, GenARM gen)
+    public override TipoRetorno Interpretar(Entorno e)
     {
-       
-       return null;
-
+        List<TipoRetorno> Slice = ConstruirSlice(e, Elementos);
+        return new TipoRetorno (Slice, Tipo.SLICE, Secundario, Slice.Count > 0? Slice[0].Dimensiones+1:1);
     }
 
 
-private List<TipoRetorno> ConstruirSlice(Entorno e, GenARM gen){
+private List<TipoRetorno> ConstruirSlice(Entorno e, List<Expresion> elementos){
     
-    return null;
+    List<TipoRetorno> nuevoSlice = new ();
+    TipoRetorno elemento;
 
+    foreach(Expresion el in Elementos){
+
+        elemento = el.Interpretar(e);
+            if(Secundario == null  ){
+                if(elemento.Tipobase != Tipo.SLICE){
+                    Secundario = elemento.Tipobase;
+                }else{
+                    Secundario = elemento.Tiposecundario;
+                }
+
+        }
+        nuevoSlice.Add(elemento);
+    }
+    return nuevoSlice;
 }
 
 }

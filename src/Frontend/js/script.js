@@ -8,12 +8,9 @@ var editor = CodeMirror(document.getElementById("editor"), {
     caseFold: true,
     theme: "VSCode",
     value:`func main() {
-	fmt.Println(2)
-	fmt.Println(3.1416)
-	fmt.Println(true)
-	fmt.Println(false)
-    fmt.Println("Hola")
-    fmt.Println('@')
+	fmt.Println(1+2*3+4)
+    fmt.Println(18, 20)
+	
 }`
 });
 

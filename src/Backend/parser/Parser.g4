@@ -2,12 +2,11 @@ grammar Parser;
 
 @header{
     namespace OLC2_Proyecto2_201612218.src.Backend.parser;
-     using OLC2_Proyecto2_201612218.src.Backend.Interprete.Utils;
-     using OLC2_Proyecto2_201612218.src.Backend.Interprete.Abstracts;
-     using OLC2_Proyecto2_201612218.src.Backend.Interprete.Expresiones;
-     using OLC2_Proyecto2_201612218.src.Backend.Interprete.Instrucciones;
-     using MiSwitch = OLC2_Proyecto2_201612218.src.Backend.Interprete.Instrucciones.Switch;
-     
+    using OLC2_Proyecto2_201612218.src.Backend.Compilador.Utils;
+    using OLC2_Proyecto2_201612218.src.Backend.Compilador.Abstracts;
+    using OLC2_Proyecto2_201612218.src.Backend.Compilador.Expresiones;
+    using OLC2_Proyecto2_201612218.src.Backend.Compilador.Instrucciones;
+    using MiSwitch = OLC2_Proyecto2_201612218.src.Backend.Compilador.Instrucciones.Switch;
 }
 
 options{
@@ -22,10 +21,10 @@ inicio returns [List < Instruccion > resultado] locals [ List < Instruccion > L 
 
 instruccionglobal returns [ Instruccion resultado  ]:
     f1=funcionMain  {$resultado = $f1.resultado;}
-  | f2=funcion {$resultado = $f2.resultado;};
+    | f2=funcion {$resultado = $f2.resultado;};
 
 funcionMain returns [ Instruccion resultado ]:
-   f = KW_func KW_main '('')' b=bloque {
+    f = KW_func KW_main '('')' b=bloque {
         $resultado = new Funcion ($f.line, $f.pos, "main", new List  < Parametro >(), $b.resultado, new Tipodato (Tipo.NIL));
     } ;
 
@@ -38,7 +37,7 @@ funcion returns [ Instruccion resultado ] locals [ Tipodato t = new Tipodato(Tip
 
 parametros returns [List < Parametro > resultado] locals [ List < Parametro > params = new()]:
     (
-       id = Tk_id t = tipoDato {$params.Add(new Parametro($id.line , $id.pos, $id.text, $t.resultado));}
+        id = Tk_id t = tipoDato {$params.Add(new Parametro($id.line , $id.pos, $id.text, $t.resultado));}
         ( 
             ',' id = Tk_id t=tipoDato {$params.Add(new Parametro($id.line , $id.pos, $id.text, $t.resultado));}
             )*)?{
