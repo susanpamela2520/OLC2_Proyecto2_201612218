@@ -8,7 +8,12 @@ var editor = CodeMirror(document.getElementById("editor"), {
     caseFold: true,
     theme: "VSCode",
     value:`func main() {
-	fmt.Println(2 + 2)
+	fmt.Println(2)
+	fmt.Println(3.1416)
+	fmt.Println(true)
+	fmt.Println(false)
+    fmt.Println("Hola")
+    fmt.Println('@')
 }`
 });
 
@@ -20,7 +25,7 @@ editor.setSize(null, window.innerHeight - document.getElementById("editor").offs
 CodeMirror.defineMode("arm64", function() {
     return {
         token: function(stream, _) {
-            if(stream.match(/\s+|,|\(|\)/)) {
+            if(stream.match(/\s+|,|\(|\)|\[|\]|!|=/)) {
                 return null
             }
             if(stream.match(/\/\/[^\n]*/)) {
@@ -38,7 +43,7 @@ CodeMirror.defineMode("arm64", function() {
             if(stream.match(/ecall/)) {
                 return "def";
             }
-            if(stream.match(/\b(?:svc|cmp|mov|adr|ldr|str|addi|subi|add|sub|mul|sdiv|udiv)\b/)) {
+            if(stream.match(/\b(?:svc|cmp|mov(z|k)?|adr|lsl|ldr|str|addi|subi|add|sub|mul|sdiv|udiv)\b/)) {
                 return "keyword";
             }
             if(stream.match(/\b(?:b((\.(eq|ne|lt))|le?|r)?|ret)\b/)) {

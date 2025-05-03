@@ -79,6 +79,13 @@ app.MapPost("/parse", async ([FromBody]Request req) => {
 
         gen.generarCodigo();
         string salidas = !Consola.Salidas().Equals("") ? Consola.Salidas() : gen.getCodigo();
+
+
+        //genera el codigo de una vez en ensamblador 
+        StreamWriter sw = new StreamWriter("./Outs/program.s");
+                sw.Write(gen.getCodigo());
+                sw.Close();
+
         return Results.Ok(new { status = 200, salida = salidas});
 
         }
