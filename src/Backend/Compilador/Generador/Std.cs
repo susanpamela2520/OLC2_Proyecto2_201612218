@@ -14,8 +14,11 @@ public class StandardLibrary {
             UsedSymbols.Add("dot_char");
             UsedSymbols.Add("zero_char");
         }
-
+        else if(function == "print_space"){
+             UsedSymbols.Add("espacio");
+        }
         UsedSymbols.Add("new_line");
+       
     }
 
     public string GetFunctionDefinitions() {
@@ -302,6 +305,21 @@ print_new_line:
     ret
 "
         },
+    
+        { "print_space", @"
+//--------------------------------------------------------------
+// print_space - Prints a space
+//--------------------------------------------------------------
+print_space:
+    // Print space
+    mov x0, #1
+    adr x1, espacio
+    mov x2, #1
+    mov x8, #64
+    svc #0
+    ret
+"
+        },
     };
 
     private readonly static Dictionary<string, string> Symbols = new() {
@@ -309,5 +327,6 @@ print_new_line:
         { "dot_char", @"dot_char: .ascii "".""" },
         { "zero_char", @"zero_char: .ascii ""0""" },
         { "new_line", @"new_line: .ascii ""\n""" },
+        {"espacio", @"espacio: .ascii "" """ }
     };
 }

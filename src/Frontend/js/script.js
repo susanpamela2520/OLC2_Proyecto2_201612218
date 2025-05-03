@@ -8,8 +8,9 @@ var editor = CodeMirror(document.getElementById("editor"), {
     caseFold: true,
     theme: "VSCode",
     value:`func main() {
-	fmt.Println(1+2*3+4)
-    fmt.Println(18, 20)
+	
+    var saludo string = "hola"
+    fmt.Println(saludo, "mundo")
 	
 }`
 });
@@ -31,22 +32,23 @@ CodeMirror.defineMode("arm64", function() {
             if(stream.match(/^0x[0-9A-Fa-f]+$/)) {
                 return "number";
             }
-            if(stream.match(/\#\-?[0-9]+(\.[0-9]+)?/)) {
+            if(stream.match(/\#?\-?[0-9]+(\.[0-9]+)?/)) {
                 return "number";
             }
-            if(stream.match(/\.\b(?:global|text|data|word)\b/)) {
+            
+            if(stream.match(/\.\b(?:global|text|data|word|ascii|space)\b/)) {
                 return "builtin";
             }
             if(stream.match(/ecall/)) {
                 return "def";
             }
-            if(stream.match(/\b(?:svc|cmp|mov(z|k)?|adr|lsl|ldr|str|addi|subi|add|sub|mul|sdiv|udiv)\b/)) {
+            if(stream.match(/\b(?:cbnz|svc|cmp|mov(z|k)?|adr|l(d(rb?|p)|sl)|st(rb?|p)|addi?|m?subi?|mul|(s|u)?div|neg)\b/)) {
                 return "keyword";
             }
-            if(stream.match(/\b(?:b((\.(eq|ne|lt))|le?|r)?|ret)\b/)) {
+            if(stream.match(/\b(?:b(ge|eq|ne|lt|le?|r)?|ret)\b/)) {
                 return "variable";
             }
-            if(stream.match(/\b(?:w([1-3][0-9]|[0-9]|zr|sp)|x([1-3][0-9]|[0-9]|zr)|sp|lr|fp)\b/)) {
+            if(stream.match(/\b(?:(x|w|v)([0-9]|[1-2][0-9]|3[0-1]|zr)|sp|lr|fp|pc)\b/)) {
                 return "attribute";
             }
             if(stream.match(/\"([^\n\"\\]|\\.)*\"/)) {

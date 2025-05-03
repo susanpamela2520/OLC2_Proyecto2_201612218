@@ -23,6 +23,7 @@ public class Primitivo : Expresion {
                 gen.AddComentario("--------- Entero ---------");
                 gen.Mov(R.x0, int.Parse (Valor.ToString()));
                 gen.Push(R.x0);
+                gen.PushObjeto(objStack);
                 gen.AddComentario("------- Fin Entero -------");
                 break;
             case Tipo.FLOAT:
@@ -41,6 +42,7 @@ public class Primitivo : Expresion {
                 }
 
                 gen.Push(R.x0);
+                gen.PushObjeto(objStack);
                 gen.AddComentario("------ Fin Flotante ------");
                 break;
             case Tipo.BOOL:
@@ -48,6 +50,7 @@ public class Primitivo : Expresion {
                 objStack = gen.ObjetoBool();
                 gen.Mov(R.x0, Valor.Equals("true") ? 1 : 0);
                 gen.Push(R.x0);
+                gen.PushObjeto(objStack);
                 gen.AddComentario("------ Fin Booleano ------");
                 break;
             case Tipo.RUNE:
@@ -55,18 +58,26 @@ public class Primitivo : Expresion {
                 objStack = gen.ObjetoRune();
                 gen.Mov(R.x0, (int) Valor.ToString().ToCharArray()[0]);
                 gen.Push(R.x0);
+                gen.PushObjeto(objStack);
                 gen.AddComentario("-------- Fin Rune --------");
                 break;
             default:
                 gen.AddComentario("--------- Cadena ---------");
                 objStack = gen.ObjetoString();
-                foreach(char c in Valor.ToString() ?? "") {
-                    gen.Mov(R.x0, (int) c);
+                List<byte>vectorString = Utils.StringToByteArray((string)Valor);
+                gen.Push(R.x10);
+                for(int i=0; i< vectorString.Count; i++){
+                    var codigoChar = vectorString[i];
+                    gen.Mov(R.w0, codigoChar);
+                    gen.Strb(R.w0, R.x10);
+                    gen.Mov(R.x0, 1);
+                    gen.Add(R.x10, R.x10, R.x0);
                 }
+                gen.PushObjeto(objStack);
                 gen.AddComentario("------- Fin Cadena -------");
                 break;
         };
-        gen.PushObjeto(objStack);
+        
         gen.AddComentario("------- Fin Primitivo -------");
         return null;
     }

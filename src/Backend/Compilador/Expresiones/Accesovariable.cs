@@ -28,6 +28,26 @@ public Accesovariable(int linea, int columna, string nombre, List < Expresion > 
 
     public override TipoRetorno Interpretar(GenARM gen)
     {
+
+         gen.AddComentario($"========== Acceso a Variable: {Nombre} ===========");
+
+         var(byteOffset, obj)= gen.GetObjeto(Nombre);
+         //se asigna a x0 el valor de byteoffset
+         gen.Mov (R.x0, byteOffset);
+         // se suma el valor de sp a x0 
+         gen.Add (R.x0, R.sp, R.x0);
+         //carga en direccion de memoria
+         gen.Ldr (R.x0, R.x0);
+         //push, para meter a registro x0
+         gen.Push(R.x0);
+
+         var ClonObjeto  = gen.ClonarObjeto(obj);
+         ClonObjeto.Id = null;
+         gen.PushObjeto(ClonObjeto);
+
+          gen.AddComentario("========== Fin Acceso Variable: ===========");
+
+
         return null;
            
     }

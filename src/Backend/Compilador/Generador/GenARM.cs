@@ -100,9 +100,12 @@ public class GenARM {
     }
 
     public void NombrarObjeto(string id) {
-        stack.Last().Id = id;
+        stack.Last().Id = id; 
     }
 
+
+    //Busca objeto del stack que su id sea igual al del parametro.
+    //devuelve una tupla (se puede definir el tipo)
     public (int, StackObject) GetObjeto(string id) {
         int byteOffset = 0;
         for(int i = stack.Count - 1; i >= 0; i --) {
@@ -166,6 +169,9 @@ public class GenARM {
     public void Str(R rs1, R rs2, int offset = 0) {
         Instrucciones.Add($"\tstr {rs1}, [{rs2}, #{offset}]");
     }
+    public void Strb(R rs1, R rs2) {
+        Instrucciones.Add($"\tstrb {rs1}, [{rs2}]");
+    }
 
     public void Ldr(R rs1, R rs2, int offset = 0) {
         Instrucciones.Add($"\tldr {rs1}, [{rs2}, #{offset}]");
@@ -199,9 +205,19 @@ public class GenARM {
         Instrucciones.Add("\tbl print_integer");
     }
 
+    public void ImprimirString(R rs) {
+        stdLib.Use("print_string");
+        Instrucciones.Add($"\tmov x0, {rs}");
+        Instrucciones.Add("\tbl print_string");
+    }
+
     public void ImprimirSalto() {
         stdLib.Use("print_new_line");
         Instrucciones.Add("\tbl print_new_line");
+    }
+    public void ImprimirEspacio() {
+        stdLib.Use("print_space");
+        Instrucciones.Add("\tbl print_space");
     }
 
     // Estructura del Programa
@@ -211,6 +227,7 @@ public class GenARM {
        Instrucciones.Add(".text");
         Instrucciones.Add(".global _start");
         Instrucciones.Add("_start:");
+        Instrucciones.Add("\tadr x10, heap"); //x10 punteor de heap
     }
 
     public void TerminarPrograma() {

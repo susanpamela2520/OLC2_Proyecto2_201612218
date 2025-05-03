@@ -42,7 +42,30 @@ public class Declaracion:Instruccion{
 
     public override TipoRetorno? Interpretar(GenARM gen)
     {
+         gen.AddComentario($"========== Declaración: {Nombre} ==========="); 
+            if(Tipo!= null){
+                if(Valor != null){
+                    Valor.Interpretar(gen);
+                   
+                }else{
+                    switch(Tipo.Tipobase){
 
+                                case Utils.Tipo.INT : new Primitivo(0,0, 0, Tipo.Tipobase).Interpretar(gen); break;
+                                case Utils.Tipo.FLOAT : new Primitivo(0,0, 0.0, Tipo.Tipobase).Interpretar(gen); break;
+                                case Utils.Tipo.BOOL : new Primitivo(0,0, "false", Tipo.Tipobase).Interpretar(gen); break;
+                                case Utils.Tipo.STRING : new Primitivo(0,0, "", Tipo.Tipobase).Interpretar(gen); break;
+                                default : new Primitivo(0,0, '\0', Tipo.Tipobase).Interpretar(gen); break;
+
+                            }
+                }
+                 gen.NombrarObjeto(Nombre);
+
+            }else{
+                Valor.Interpretar(gen);
+                gen.NombrarObjeto(Nombre); // se hizo una declaración 
+
+            }
+             gen.AddComentario("========== Fin Declaración ===========");
              return null; 
 
     }
